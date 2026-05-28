@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinava Curator — Geometric Showcase</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <main class="curator-container">
+        
+        <div class="showcase-area">
+            
+            <aside class="sidebar-controls">
+                <header class="main-header">
+                    <div class="logo-wrapper">
+                        <img src="assets/logo.PNG" alt="Pinava Logo" class="center-logo" id="mainLogo">
+                    </div>
+                    <h1 class="brand-title">PINAVA <span>CURATOR</span></h1>
+                    <p class="brand-subtitle">Select a registry entry to initiate presentation</p>
+                </header>
+
+                <nav class="geometric-menu" id="geometricMenu"></nav>
+                <footer class="curator-signature">
+                  Curated by <span class="signature-handwritten">chef-belly</span>
+                </footer>
+            </aside>
+
+            <section class="details-display" id="detailsDisplay">
+                <div class="glass-presenter-card" id="glassPresenter">
+                    <div class="presenter-body">
+                        <span class="project-index-badge" id="projectIndex">01</span>
+                        <h2 class="presenter-title" id="projectTitle">Project Title</h2>
+                        <p class="presenter-desc" id="projectDesc">Select a project from the registry menu to view its structural architecture, deployment parameters, and live source links.</p>
+                    </div>
+                    <div class="presenter-footer">
+                        <div class="tech-tags-container" id="techTags">
+                            </div>
+                        <button class="action-trigger-btn" id="launchShowroomBtn">Explore Project &rarr;</button>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <section class="mobile-projects-list" id="mobileList">
+            <div class="mobile-logo-container">
+                <img src="assets/logo.PNG" alt="Pinava Logo" class="mobile-center-logo">
+                <h1 class="mobile-brand-title">PINAVA <span>CURATOR</span></h1>
+                <p class="mobile-brand-subtitle">Project Registry Portfolio</p>
+            </div>
+            
+            <div class="mobile-grid" id="mobileGrid"></div>
+            <footer class="curator-signature mobile-sig">
+              Curated by <span class="signature-handwritten">chef-belly</span>
+            </footer>
+        </section>
+    </main>
+
+    <div class="project-viewer" id="projectViewer" aria-hidden="true">
+        <button class="close-btn" id="closeViewer" aria-label="Close Viewer">&times;</button>
+        
+        <div class="viewer-content">
+            <div class="iframe-wrapper">
+                <iframe src="" id="projectIframe" title="Project Live Preview"></iframe>
+                <div class="iframe-loader" id="iframeLoader">Loading Cinematic Preview...</div>
+            </div>
+            
+            <div class="project-details">
+                <h2 id="viewedProjectTitle">Project Title</h2>
+                <p id="viewedProjectDesc">Detailed system architecture breakdown and tech stack analysis.</p>
+                <div class="project-links">
+                    <a href="#" id="liveLink" target="_blank" class="btn btn-primary">Launch Live Site</a>
+                    <a href="#" id="repoLink" target="_blank" class="btn btn-secondary">View GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/projects.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+<!-- chef-belly  -->

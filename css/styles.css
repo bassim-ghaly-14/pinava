@@ -1,0 +1,487 @@
+/* --- Global Design Tokens --- */
+:root {
+    --bg-dark: #070707;
+    --card-bg: rgba(20, 20, 20, 0.4);
+    --gold-primary: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 100%);
+    --gold-solid: #b38728;
+    --text-light: #f5f5f5;
+    --text-muted: #7a7a7a;
+    --border-glass: rgba(179, 135, 40, 0.15);
+    --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 20% 50%, #17130b 0%, #070707 80%);
+    z-index: -1;
+    opacity: 0.9;
+}
+
+/* --- Container Base Structure --- */
+.curator-container {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Split Layout System (Desktop Viewport) --- */
+.showcase-area {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* RIGHT SIDEBAR PANEL (40% Viewport Scale) */
+.sidebar-controls {
+    width: 40%;
+    height: 100%;
+    border-right: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 3.5rem;
+    background: linear-gradient(90deg, rgba(5,5,5,0.5) 0%, rgba(0,0,0,0) 100%);
+    z-index: 10;
+}
+
+.main-header {
+    text-align: left;
+}
+
+.logo-wrapper {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 1.5rem;
+}
+
+.center-logo {
+    width: 100%; height: 100%; object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(179, 135, 40, 0.2));
+}
+
+.brand-title {
+    font-size: 2rem;
+    letter-spacing: 3px;
+    font-weight: 900;
+    background: var(--gold-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-title span {
+    font-weight: 300;
+    color: var(--text-light);
+    -webkit-text-fill-color: initial;
+}
+
+.brand-subtitle {
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Geometric Navigation Sidebar Menu List */
+.geometric-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition-smooth);
+}
+
+.menu-item-index {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    font-family: monospace;
+    transition: 0.3s;
+}
+
+.menu-item-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: 0.3s;
+}
+
+.menu-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; height: 100%; width: 3px;
+    background: var(--gold-primary);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.menu-item:hover, .menu-item.active-menu-item {
+    background: rgba(179, 135, 40, 0.04);
+    border-color: var(--border-glass);
+    transform: translateX(10px);
+}
+
+.menu-item:hover .menu-item-title, .menu-item.active-menu-item .menu-item-title {
+    color: var(--text-light);
+}
+
+.menu-item.active-menu-item .menu-item-index {
+    color: var(--gold-solid);
+}
+
+.menu-item.active-menu-item::before {
+    opacity: 1;
+}
+
+/* LEFT PRESENTATION WINDOW (60% Viewport Scale) */
+.details-display {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    position: relative;
+}
+
+/* Premium High-End Glassmorphism Card Frame */
+.glass-presenter-card {
+    width: 100%;
+    max-width: 750px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-glass);
+    border-radius: 24px;
+    padding: 3.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3rem;
+    position: relative;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.glass-presenter-card.slide-fade-transition {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    transition: none;
+}
+
+.project-index-badge {
+    font-size: 4rem;
+    font-weight: 900;
+    font-family: monospace;
+    line-height: 1;
+    background: var(--gold-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.2;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.presenter-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+}
+
+.presenter-desc {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.presenter-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 2rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.tech-tags-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tech-tag {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+.action-trigger-btn {
+    background: var(--gold-primary);
+    color: #000;
+    font-weight: 700;
+    border: none;
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: 0.3s ease;
+}
+
+.action-trigger-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(179, 135, 40, 0.3);
+}
+
+/* --- Fallback Responsive Architecture (Mobile / Tablet) --- */
+.mobile-projects-list {
+    display: none;
+    width: 100%;
+    padding: 3rem 1.5rem;
+}
+
+/* Dynamic Mobile Branding Header */
+.mobile-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+.mobile-center-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 15px rgba(179, 135, 40, 0.25));
+}
+
+.mobile-brand-title {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    font-weight: 900;
+    background: var(--gold-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.mobile-brand-title span {
+    font-weight: 300;
+    color: var(--text-light);
+    -webkit-text-fill-color: initial;
+}
+
+.mobile-brand-subtitle {
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    font-size: 0.85rem;
+}
+
+/* Luxury Mobile Project Grid System */
+.mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.project-card {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    padding: 1.75rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: var(--transition-smooth);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* The Animated Golden Border Top Hook */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 3px;
+    background: var(--gold-primary);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* Mobile Card Hover / Interactive States */
+.project-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--border-glass);
+    box-shadow: 0 15px 35px rgba(179, 135, 40, 0.1), 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+.project-card h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: color 0.3s;
+}
+
+.project-card:hover h3 {
+    color: #fcf6ba; /* Slight illuminating glow on titles */
+}
+
+.project-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* --- Cinematic Showroom Viewer Sandbox (Modal) --- */
+.project-viewer {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 5, 5, 0.96);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.project-viewer.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px; right: 30px;
+    background: none; border: none;
+    color: var(--text-light);
+    font-size: 3rem;
+    cursor: pointer;
+    z-index: 101;
+    transition: 0.3s;
+}
+.close-btn:hover { color: var(--gold-solid); transform: rotate(90deg); }
+
+.viewer-content {
+    width: 90%; max-width: 1300px; height: 85vh;
+    display: flex; flex-direction: column;
+    background: #0d0d0d; border: 1px solid #222; border-radius: 16px;
+    overflow: hidden;
+}
+
+.iframe-wrapper { flex: 1; position: relative; background: #000; }
+.iframe-wrapper iframe { width: 100%; height: 100%; border: none; }
+.iframe-loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--gold-solid); font-weight: bold;}
+
+.project-details { padding: 1.5rem; background: #111; border-top: 1px solid #222; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.project-details h2 { font-size: 1.5rem; }
+.project-details p { color: var(--text-muted); flex: 1; margin: 0 1.5rem; min-width: 300px; }
+.project-links { display: flex; gap: 1rem; }
+
+.btn { padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+.btn-primary { background: var(--gold-primary); color: #000; font-weight: bold; }
+.btn-secondary { background: #222; color: var(--text-light); border: 1px solid #444; }
+.btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 1024px) {
+    body { overflow-y: auto; }
+    .showcase-area { display: none; }
+    .mobile-projects-list { display: block; }
+    .curator-container { height: auto; }
+}
+
+@media (max-width: 768px) {
+    .viewer-content { height: 95vh; }
+    .project-details { flex-direction: column; align-items: flex-start; }
+    .project-details p { margin: 0.5rem 0; }
+    .project-links { width: 100%; justify-content: space-between; }
+}
+/* --- Premium Curator Signature Styling --- */
+@import url('https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap');
+
+.curator-signature {
+    margin-top: auto; 
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.25);
+    font-weight: 400;
+    transition: color 0.4s ease;
+    user-select: none;
+}
+
+.signature-handwritten {
+    font-family: 'La Belle Aurore', cursive, sans-serif;
+    font-size: 1.4rem;
+    text-transform: none;
+    background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    margin-left: 5px;
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.curator-signature:hover {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.curator-signature:hover .signature-handwritten {
+    transform: scale(1.05) rotate(-2deg);
+    filter: drop-shadow(0 0 8px rgba(252, 246, 186, 0.4));
+}
+.mobile-sig {
+    text-align: center;
+    margin-top: 4rem;
+    width: 100%;
+    display: block;
+}
