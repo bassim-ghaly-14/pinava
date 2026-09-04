@@ -17,14 +17,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeViewer = document.getElementById("closeViewer");
     const projectIframe = document.getElementById("projectIframe");
     const iframeLoader = document.getElementById("iframeLoader");
+    const iframeFallback = document.getElementById("iframeFallback");
+    const iframeFallbackLink = document.getElementById("iframeFallbackLink");
     const viewedProjectTitle = document.getElementById("viewedProjectTitle");
     const viewedProjectDesc = document.getElementById("viewedProjectDesc");
     const liveLink = document.getElementById("liveLink");
     const repoLink = document.getElementById("repoLink");
 
+    // Projects data is loaded via js/projects.js — degrade gracefully if it fails
+    if (typeof myProjects === "undefined" || !Array.isArray(myProjects)) {
+        console.warn("Pinava: project data unavailable. Projects section skipped.");
+        return;
+    }
+
     let activeProject = null;
     let lastFocusedElement = null;
+    let iframeTimeoutId = null;
+    let presenterTimeoutId = null;
     const fallbackFavicon = "assets/favicon.svg";
+    // Practical iframe-block detection: if no `load` event within this window,
+    // assume the site refuses embedding (X-Frame-Options / CSP) and show fallback.
+    const IFRAME_LOAD_TIMEOUT_MS = 12000;
 
     // Safe favicon setter with fallback
     function setFavicon(imgEl, project) {
@@ -84,10 +97,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderPresenterWithAnimation(project, indexString) {
         activeProject = project;
 
+        // Prevent overlapping transitions when switching projects quickly
+        if (presenterTimeoutId) clearTimeout(presenterTimeoutId);
+
         glassPresenter.classList.add("slide-fade-transition");
         glassPresenter.style.transition = "none";
 
-        setTimeout(() => {
+        presenterTimeoutId = setTimeout(() => {
+            presenterTimeoutId = null;
             projectIndex.innerText = indexString;
             projectTitle.innerText = project.title;
             if (projectTagline) {
@@ -144,13 +161,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 card.innerHTML = `
                     <div class="project-card-head">
-                        <img src="${project.favicon || "assets/favicon.svg"}" alt="" class="project-card-favicon" width="32" height="32">
-                        <h3>${project.title}</h3>
+                        <img src="${project.favicon || fallbackFavicon}" alt="" class="project-card-favicon" width="32" height="32" loading="lazy" onerror="this.onerror=null;this.src='${fallbackFavicon}'">
+                        <span class="project-card-title">${project.title}</span>
                     </div>
                     ${taglineHtml}
                     <p>${project.description.substring(0, 100)}...</p>
                     ${techHtml}
                 `;
+                card.setAttribute("aria-label", `View project: ${project.title}`);
 
                 card.addEventListener("click", () => openProjectInViewer(project, card));
                 mobileGrid.appendChild(card);
@@ -166,10 +184,30 @@ document.addEventListener("DOMContentLoaded", () => {
         projectViewer.setAttribute("aria-hidden", "false");
         document.body.classList.add("modal-open");
 
-        iframeLoader.style.display = "block";
+        iframeLoader.hidden = false;
+        iframeFallback.hidden = true;
         projectIframe.style.opacity = "0";
 
-        projectIframe.src = project.liveUrl || "";
+        if (iframeTimeoutId) clearTimeout(iframeTimeoutId);
+
+        // Only the "Explore Project" path loads the live site; no iframe exists until now.
+        if (project.liveUrl) {
+            projectIframe.title = `${project.title} — live preview`;
+            projectIframe.src = project.liveUrl;
+
+            // One-shot practical detection for embedding blocks (X-Frame-Options /
+            // CSP frame-ancestors). No polling, no repeated reloads.
+            iframeTimeoutId = setTimeout(() => {
+                iframeTimeoutId = null;
+                iframeLoader.hidden = true;
+                iframeFallback.hidden = false;
+            }, IFRAME_LOAD_TIMEOUT_MS);
+        } else {
+            projectIframe.removeAttribute("src");
+            iframeLoader.hidden = true;
+            iframeFallback.hidden = false;
+        }
+
         viewedProjectTitle.innerText = project.title;
         viewedProjectDesc.innerText = project.description;
 
@@ -181,6 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
             liveLink.style.display = "none";
         }
 
+        iframeFallbackLink.href = project.liveUrl || "#";
+
         if (project.repoUrl) {
             repoLink.href = project.repoUrl;
             repoLink.style.display = "";
@@ -190,7 +230,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         projectIframe.onload = () => {
-            iframeLoader.style.display = "none";
+            if (iframeTimeoutId) {
+                clearTimeout(iframeTimeoutId);
+                iframeTimeoutId = null;
+            }
+            iframeLoader.hidden = true;
             projectIframe.style.transition = "opacity 0.4s ease";
             projectIframe.style.opacity = "1";
         };
@@ -205,7 +249,18 @@ document.addEventListener("DOMContentLoaded", () => {
         projectViewer.classList.remove("active");
         projectViewer.setAttribute("aria-hidden", "true");
         document.body.classList.remove("modal-open");
-        projectIframe.src = "";
+
+        // Release iframe resources without triggering a navigation to the parent page
+        if (iframeTimeoutId) {
+            clearTimeout(iframeTimeoutId);
+            iframeTimeoutId = null;
+        }
+        projectIframe.onload = null;
+        projectIframe.removeAttribute("src");
+        projectIframe.src = "about:blank";
+        projectIframe.title = "Project Live Preview";
+        iframeLoader.hidden = true;
+        iframeFallback.hidden = true;
 
         if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
             lastFocusedElement.focus();
