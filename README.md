@@ -25,9 +25,6 @@ pinava-curator/
 │   ├── app.js          # DOM Controller and runtime application lifecycle
 │   ├── projects.js     # Structured dataset for portfolio entries
 │   └── animation.js    # Math-driven WAAPI layout engine and physics
-│
-└── assets/
-    └── logo.png        # Premium brand asset
 
 The internal animation engine recalculates spatial angles, balances node dispersion vectors, and updates the mobile viewport layout instantly.
 ⚡ Tech Stack
