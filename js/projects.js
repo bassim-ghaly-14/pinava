@@ -108,5 +108,33 @@ const myProjects = [
         favicon: "assets/projects/pine-notes/favicon.svg",
         liveUrl: "https://pine-notes.vercel.app/",
         repoUrl: "https://github.com/bassim-ghaly-14/pine-notes"
+    },
+    {
+        id: 5,
+        slug: "rotix",
+        title: "ROTIX",
+        tagline: "Cyber-fluid pipeline puzzle game",
+        description:
+            "A dependency-free cyber-fluid puzzle game where players rotate pipeline nodes to route two independent energy streams into a shared reactor, solve 30 handcrafted levels, and manage a rising pressure system.",
+        highlights: [
+            "30 handcrafted levels with a built-in graph solver",
+            "Dual-channel power propagation and pressure system",
+            "English/Arabic localization with full RTL support"
+        ],
+        techs: [
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "ES Modules",
+            "Web Audio API",
+            "Vibration API",
+            "Local Storage",
+            "i18n"
+        ],
+        category: "game",
+        featured: false,
+        favicon: "assets/projects/rotix/favicon.svg",
+        liveUrl: "https://rotix-game.vercel.app/",
+        repoUrl: "https://github.com/bassim-ghaly-14/rotix"
     }
 ];

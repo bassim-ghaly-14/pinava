@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+    <defs>
+        <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#bf953f"/>
+            <stop offset="50%" stop-color="#fcf6ba"/>
+            <stop offset="100%" stop-color="#b38728"/>
+        </linearGradient>
+
+        <linearGradient id="surface" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#151515"/>
+            <stop offset="100%" stop-color="#080808"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Background -->
+    <rect
+        width="32"
+        height="32"
+        rx="7"
+        fill="#050505"
+    />
+
+    <!-- Controller Body -->
+    <path
+        d="M7.05 12.15
+           C8.25 9.55 10.45 8 13.05 8
+           H18.95
+           C21.55 8 23.75 9.55 24.95 12.15
+           C26.05 14.75 26.65 18.25 26.05 21.3
+           C25.65 23.45 24.4 25.15 22.55 25.35
+           C20.75 25.55 19.45 24.1 18.55 22.2
+           H13.45
+           C12.55 24.1 11.25 25.55 9.45 25.35
+           C7.6 25.15 6.35 23.45 5.95 21.3
+           C5.35 18.25 5.95 14.75 7.05 12.15
+           Z"
+        fill="url(#surface)"
+        stroke="url(#gold)"
+        stroke-width="1.35"
+        stroke-linejoin="round"
+    />
+
+    <!-- Left D-Pad -->
+    <path
+        d="M10.05 15.05
+           H12.05
+           V13.05
+           H13.95
+           V15.05
+           H15.95
+           V16.95
+           H13.95
+           V18.95
+           H12.05
+           V16.95
+           H10.05
+           Z"
+        fill="url(#gold)"
+    />
+
+    <!-- Right Action Buttons -->
+    <circle
+        cx="20.05"
+        cy="14.15"
+        r="1.25"
+        fill="url(#gold)"
+    />
+
+    <circle
+        cx="22.25"
+        cy="16.35"
+        r="1.25"
+        fill="url(#gold)"
+    />
+
+    <circle
+        cx="17.85"
+        cy="16.35"
+        r="1.25"
+        fill="url(#gold)"
+    />
+
+    <circle
+        cx="20.05"
+        cy="18.55"
+        r="1.25"
+        fill="url(#gold)"
+    />
+
+    <!-- Center Indicator -->
+    <rect
+        x="15.2"
+        y="10.55"
+        width="1.6"
+        height="0.65"
+        rx="0.325"
+        fill="url(#gold)"
+        opacity="0.7"
+    />
+</svg>
