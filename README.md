@@ -4,10 +4,12 @@ Pinava is a lightweight personal portfolio for a frontend developer. It is built
 
 ## Features
 
-- Personal hero section with core tech stack and CV download
+- Personal hero section with an availability indicator and CV actions (view in a new tab or download)
 - Selected work section with desktop split layout and mobile responsive cards
 - Project viewer modal with keyboard accessibility and graceful iframe fallback
 - Optional per-project case studies (challenge, approach, key decisions) rendered inside the project viewer
+- "How I Build" section — a 4-step development process with an integrated principles strip
+- Grouped Tech Stack section (static HTML, no JS required)
 - Contact CTA transition banner linking to the contact section
 - Lazy iframe loading — live previews only load when the viewer is opened
 - Skip link, focus management, focus trap, and semantic structure
@@ -55,6 +57,7 @@ Open `index.html` in a browser or serve the folder with any static server.
 ## Notes
 
 - The canonical domain is `https://pinava-curator.vercel.app/` (used for canonical, Open Graph, sitemap, and JSON-LD).
+- "View CV" opens `cv/cv.pdf` in a new tab using the browser's native PDF viewer — no PDF library or embedding involved.
 - If a live project blocks iframe embedding (X-Frame-Options / CSP frame-ancestors), the viewer shows a fallback panel with an "Open Live Site" link after a one-shot timeout. The external link is always available as a guaranteed fallback.
 - Case studies are optional: each project in `projects.js` may define a `caseStudy` object (`challenge`, `approach`, `decisions`). The viewer renders it safely and hides the container entirely when it is missing or incomplete.
 

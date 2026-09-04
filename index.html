@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Pinava — Frontend Developer Portfolio</title>
-    <meta name="description" content="Pinava is the personal portfolio of Bassim Ghaly, a Frontend Developer based in Tanta, Egypt, building modern, scalable web experiences with React, Next.js, and TypeScript.">
+    <meta name="description" content="Pinava is the personal portfolio of Bassim Ghaly, a Frontend Developer based in Cairo, Egypt, building modern, scalable web experiences with React, Next.js, and TypeScript.">
     <meta name="author" content="Bassim Ghaly">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://pinava-curator.vercel.app/">
@@ -78,7 +78,7 @@
 
         <section id="hero" class="hero" aria-labelledby="hero-heading">
             <div class="hero-inner reveal-stagger">
-                <p class="hero-eyebrow">Frontend Developer · Tanta, Egypt</p>
+                <p class="hero-eyebrow">Frontend Developer · Cairo, Egypt</p>
                 <h1 id="hero-heading" class="hero-title">
                     <span class="hero-name">Bassim Ghaly</span>
                     <span class="hero-title-statement">Building modern, scalable web experiences.</span>
@@ -87,9 +87,16 @@
                     I design and build fast, accessible web applications with React, Next.js, and TypeScript —
                     shaped by hands-on project work from architecture to deployment.
                 </p>
+                <p class="hero-availability">
+                    <span class="availability-dot" aria-hidden="true"></span>
+                    Open to frontend opportunities
+                </p>
                 <div class="hero-actions">
                     <a href="#projects" class="btn btn-primary">View Projects</a>
                     <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+                </div>
+                <div class="hero-cv-actions">
+                    <a href="cv/cv.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View CV <span aria-hidden="true">&nearr;</span><span class="visually-hidden">(opens in a new tab)</span></a>
                     <a href="cv/cv.pdf" class="btn btn-secondary" download="cv.pdf">Download CV</a>
                 </div>
             </div>
@@ -133,6 +140,95 @@
             </div>
         </section>
 
+        <section id="how-i-build" class="how-build-section" aria-labelledby="how-build-heading">
+            <div class="section-header reveal">
+                <h2 id="how-build-heading" class="section-title">How I Build</h2>
+                <p class="section-subtitle">A repeatable process for turning requirements into maintainable products — and the principles that keep it honest.</p>
+            </div>
+            <ol class="process-grid reveal">
+                <li class="process-step">
+                    <span class="process-number" aria-hidden="true">01</span>
+                    <h3 class="process-title">Understand</h3>
+                    <p class="process-text">Break the problem into clear requirements and constraints before any code is written.</p>
+                </li>
+                <li class="process-step">
+                    <span class="process-number" aria-hidden="true">02</span>
+                    <h3 class="process-title">Architect</h3>
+                    <p class="process-text">Choose structures and patterns the codebase can grow with — not just ones that work today.</p>
+                </li>
+                <li class="process-step">
+                    <span class="process-number" aria-hidden="true">03</span>
+                    <h3 class="process-title">Build</h3>
+                    <p class="process-text">Turn design and logic into a responsive, accessible experience, end to end.</p>
+                </li>
+                <li class="process-step">
+                    <span class="process-number" aria-hidden="true">04</span>
+                    <h3 class="process-title">Refine</h3>
+                    <p class="process-text">Test the edge cases, optimize what is slow, and polish the details others skip.</p>
+                </li>
+            </ol>
+            <div class="principles reveal">
+                <h3 class="principles-title">Principles</h3>
+                <ul class="principles-list">
+                    <li class="principle">
+                        <span class="principle-name">Clean by Default</span>
+                        <span class="principle-desc">Code should read the way it will be maintained: clearly.</span>
+                    </li>
+                    <li class="principle">
+                        <span class="principle-name">Performance Matters</span>
+                        <span class="principle-desc">Fast is a feature — measured, not assumed.</span>
+                    </li>
+                    <li class="principle">
+                        <span class="principle-name">Accessibility First</span>
+                        <span class="principle-desc">Interfaces should work for everyone, from the first commit.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="tech-stack" class="tech-stack-section" aria-labelledby="tech-stack-heading">
+            <div class="section-header reveal">
+                <h2 id="tech-stack-heading" class="section-title">Tech Stack</h2>
+                <p class="section-subtitle">The tools I reach for in day-to-day product work — all used across the projects on this page.</p>
+            </div>
+            <div class="stack-groups reveal">
+                <div class="stack-group">
+                    <h3 class="stack-group-title">Core</h3>
+                    <ul class="stack-tags">
+                        <li class="tech-tag">HTML5</li>
+                        <li class="tech-tag">CSS3</li>
+                        <li class="tech-tag">JavaScript</li>
+                        <li class="tech-tag">TypeScript</li>
+                    </ul>
+                </div>
+                <div class="stack-group">
+                    <h3 class="stack-group-title">Frameworks</h3>
+                    <ul class="stack-tags">
+                        <li class="tech-tag">React</li>
+                        <li class="tech-tag">Next.js</li>
+                    </ul>
+                </div>
+                <div class="stack-group">
+                    <h3 class="stack-group-title">UI &amp; Styling</h3>
+                    <ul class="stack-tags">
+                        <li class="tech-tag">MUI</li>
+                        <li class="tech-tag">Tailwind CSS</li>
+                    </ul>
+                </div>
+                <div class="stack-group">
+                    <h3 class="stack-group-title">Data &amp; Tooling</h3>
+                    <ul class="stack-tags">
+                        <li class="tech-tag">TanStack Query</li>
+                        <li class="tech-tag">Redux Toolkit</li>
+                        <li class="tech-tag">Axios</li>
+                        <li class="tech-tag">Git</li>
+                        <li class="tech-tag">GitHub</li>
+                        <li class="tech-tag">Vercel</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <section id="about" class="about-section" aria-labelledby="about-heading">
             <div class="section-header reveal">
                 <h2 id="about-heading" class="section-title">About</h2>
@@ -140,8 +236,8 @@
             <div class="about-inner">
                 <p class="about-text">
                     I taught myself frontend development by building real projects rather than collecting tutorials.
-                    That process taught me how to break complex requirements into clean, maintainable code — and how
-                    small decisions in state, layout, and interaction determine whether a product feels solid.
+                    Small decisions in state, layout, and interaction determine whether a product feels solid —
+                    so I treat them with care.
                 </p>
                 <p class="about-text">
                     I care about scalable architecture and careful execution: predictable data flow, accessible
