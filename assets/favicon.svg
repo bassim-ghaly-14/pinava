@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+    <defs>
+        <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#bf953f"/>
+            <stop offset="50%" stop-color="#fcf6ba"/>
+            <stop offset="100%" stop-color="#b38728"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Background -->
+    <rect
+        width="32"
+        height="32"
+        rx="7"
+        fill="#070707"
+    />
+
+    <!-- Code Window -->
+    <rect
+        x="5.5"
+        y="7"
+        width="21"
+        height="18"
+        rx="3"
+        fill="none"
+        stroke="url(#gold)"
+        stroke-width="1.5"
+    />
+
+    <!-- Window Header -->
+    <path
+        d="M5.5 12 H26.5"
+        fill="none"
+        stroke="url(#gold)"
+        stroke-width="1.2"
+        opacity="0.8"
+    />
+
+    <!-- Window Dots -->
+    <circle cx="9" cy="9.5" r="0.8" fill="url(#gold)"/>
+    <circle cx="11.8" cy="9.5" r="0.8" fill="url(#gold)"/>
+    <circle cx="14.6" cy="9.5" r="0.8" fill="url(#gold)"/>
+
+    <!-- Code Brackets -->
+    <path
+        d="M12.5 16
+           L9.5 19
+           L12.5 22"
+        fill="none"
+        stroke="url(#gold)"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+
+    <path
+        d="M19.5 16
+           L22.5 19
+           L19.5 22"
+        fill="none"
+        stroke="url(#gold)"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    />
+
+    <!-- Slash -->
+    <path
+        d="M17.5 15
+           L14.5 23"
+        fill="none"
+        stroke="url(#gold)"
+        stroke-width="1.35"
+        stroke-linecap="round"
+    />
+</svg>

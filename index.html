@@ -2,151 +2,170 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-
-    <!-- Responsive -->
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    >
-
-    <!-- Primary SEO -->
-    <title>Pinava Curator — Geometric Showcase</title>
-    <meta
-        name="description"
-        content="Pinava Curator — a curated geometric showcase of selected digital projects, interfaces, and creative work."
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Pinava — Frontend Developer Portfolio</title>
+    <meta name="description" content="Pinava is the personal portfolio of chef-belly, a frontend developer building modern web interfaces with React, Next.js, TypeScript, and vanilla web technologies.">
     <meta name="author" content="chef-belly">
-    <meta
-        name="keywords"
-        content="Pinava, Curator, Portfolio, Projects, Web Development, Frontend, Showcase"
-    >
-
-    <!-- Search Engine -->
+    <meta name="keywords" content="Pinava, Portfolio, Frontend Developer, React, Next.js, TypeScript, Web Development">
     <meta name="robots" content="index, follow">
     <meta name="googlebot" content="index, follow">
-
-    <!-- Canonical -->
     <link rel="canonical" href="https://pinava-curator.vercel.app/">
-
-    <!-- Favicon -->
-    <link
-        rel="icon"
-        type="image/png"
-        href="https://res.cloudinary.com/paihc5qx/image/upload/v1788526286/logo_rm0tog.png"
-    >
-    <link
-        rel="apple-touch-icon"
-        href="https://res.cloudinary.com/paihc5qx/image/upload/v1788526286/logo_rm0tog.png"
-    >
-
-    <!-- Browser UI -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
     <meta name="theme-color" content="#0a0a0a">
     <meta name="color-scheme" content="dark">
-
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Pinava Curator — Geometric Showcase">
-    <meta
-        property="og:description"
-        content="A curated geometric showcase of selected digital projects, interfaces, and creative work."
-    >
-    <meta
-        property="og:image"
-        content="https://res.cloudinary.com/paihc5qx/image/upload/v1788526286/logo_rm0tog.png"
-    >
-    <meta property="og:image:alt" content="Pinava Curator">
-    <meta property="og:site_name" content="Pinava Curator">
+    <meta property="og:title" content="Pinava — Frontend Developer Portfolio">
+    <meta property="og:description" content="Personal portfolio of chef-belly, a frontend developer building modern web interfaces.">
+    <meta property="og:image" content="assets/favicon.svg">
+    <meta property="og:image:alt" content="Pinava Logo">
+    <meta property="og:site_name" content="Pinava">
     <meta property="og:locale" content="en_US">
-
-    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Pinava Curator — Geometric Showcase">
-    <meta
-        name="twitter:description"
-        content="A curated geometric showcase of selected digital projects, interfaces, and creative work."
-    >
-    <meta
-        name="twitter:image"
-        content="https://res.cloudinary.com/paihc5qx/image/upload/v1788526286/logo_rm0tog.png"
-    >
-    <meta name="twitter:image:alt" content="Pinava Curator">
-
-    <!-- Performance -->
-    <link rel="preconnect" href="https://res.cloudinary.com">
-    <link rel="dns-prefetch" href="//res.cloudinary.com">
-
-    <!-- Styles -->
+    <meta name="twitter:title" content="Pinava — Frontend Developer Portfolio">
+    <meta name="twitter:description" content="Personal portfolio of chef-belly, a frontend developer building modern web interfaces.">
+    <meta name="twitter:image" content="assets/favicon.svg">
+    <meta name="twitter:image:alt" content="Pinava Logo">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
     <div class="bg-overlay"></div>
 
-    <main class="curator-container">
-        
-        <div class="showcase-area">
-            
-            <aside class="sidebar-controls">
-                <header class="main-header">
-                    <div class="logo-wrapper">
-                        <img src="https://res.cloudinary.com/paihc5qx/image/upload/v1788526286/logo_rm0tog.png" alt="Pinava Logo" class="center-logo" id="mainLogo">
-                    </div>
-                    <h1 class="brand-title">PINAVA <span>CURATOR</span></h1>
-                    <p class="brand-subtitle">Select a registry entry to initiate presentation</p>
-                </header>
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
-                <nav class="geometric-menu" id="geometricMenu"></nav>
-                <footer class="curator-signature">
-                  Curated by <span class="signature-handwritten">chef-belly</span>
-                </footer>
-            </aside>
-
-            <section class="details-display" id="detailsDisplay">
-                <div class="glass-presenter-card" id="glassPresenter">
-                    <div class="presenter-body">
-                        <span class="project-index-badge" id="projectIndex">01</span>
-                        <h2 class="presenter-title" id="projectTitle">Project Title</h2>
-                        <p class="presenter-desc" id="projectDesc">Select a project from the registry menu to view its structural architecture, deployment parameters, and live source links.</p>
-                    </div>
-                    <div class="presenter-footer">
-                        <div class="tech-tags-container" id="techTags">
-                            </div>
-                        <button class="action-trigger-btn" id="launchShowroomBtn">Explore Project &rarr;</button>
-                    </div>
-                </div>
-            </section>
-
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="#hero" class="header-brand" aria-label="Pinava home">
+                <img src="assets/favicon.svg" alt="" class="header-logo" width="32" height="32">
+                <span class="header-brand-text">PINAVA</span>
+            </a>
+            <nav class="header-nav" aria-label="Primary">
+                <a href="#projects" class="header-nav-link">Projects</a>
+                <a href="#about" class="header-nav-link">About</a>
+                <a href="#contact" class="header-nav-link">Contact</a>
+            </nav>
         </div>
+    </header>
 
-        <section class="mobile-projects-list" id="mobileList">
-            <div class="mobile-logo-container">
-                <img src="https://res.cloudinary.com/paihc5qx/image/upload/v1788526286/logo_rm0tog.png" alt="Pinava Logo" class="mobile-center-logo">
-                <h1 class="mobile-brand-title">PINAVA <span>CURATOR</span></h1>
-                <p class="mobile-brand-subtitle">Project Registry Portfolio</p>
+    <main id="main-content" class="site-main">
+
+        <section id="hero" class="hero" aria-labelledby="hero-heading">
+            <div class="hero-inner">
+                <p class="hero-eyebrow">Frontend Developer</p>
+                <h1 id="hero-heading" class="hero-title">
+                    <span class="hero-name">Bassim Ghaly</span>
+                </h1>
+                <p class="hero-tagline">Crafting modern web interfaces</p>
+                <p class="hero-subtitle">
+                    I build accessible, performant web applications with React, Next.js, TypeScript, and vanilla web technologies.
+                </p>
+                <ul class="hero-tech" aria-label="Core technologies">
+                    <li class="hero-tech-item">React</li>
+                    <li class="hero-tech-item">Next.js</li>
+                    <li class="hero-tech-item">TypeScript</li>
+                    <li class="hero-tech-item">JavaScript</li>
+                    <li class="hero-tech-item">CSS3</li>
+                </ul>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="cv/cv.pdf" class="btn btn-secondary" download="cv.pdf">Download CV</a>
+                </div>
             </div>
-            
-            <div class="mobile-grid" id="mobileGrid"></div>
-            <footer class="curator-signature mobile-sig">
-              Curated by <span class="signature-handwritten">chef-belly</span>
-            </footer>
         </section>
+
+        <section id="projects" class="projects-section" aria-labelledby="projects-heading">
+            <div class="section-header">
+                <h2 id="projects-heading" class="section-title">Selected Work</h2>
+                <p class="section-subtitle">A curated selection of projects showcasing frontend and fullstack development.</p>
+            </div>
+
+            <div class="showcase-area">
+                <aside class="sidebar-controls">
+                    <nav class="geometric-menu" id="geometricMenu" aria-label="Project list"></nav>
+                </aside>
+
+                <section class="details-display" id="detailsDisplay">
+                    <div class="glass-presenter-card" id="glassPresenter">
+                        <div class="presenter-body">
+                            <div class="presenter-favicon-wrap">
+                                <img src="" alt="" class="presenter-favicon" id="projectFavicon" width="48" height="48">
+                            </div>
+                            <span class="project-index-badge" id="projectIndex">01</span>
+                            <h3 class="presenter-title" id="projectTitle">Project Title</h3>
+                            <p class="presenter-tagline" id="projectTagline"></p>
+                            <p class="presenter-desc" id="projectDesc">Select a project from the registry menu to view its details.</p>
+                        </div>
+                        <div class="presenter-footer">
+                            <div class="tech-tags-container" id="techTags" aria-label="Technologies used"></div>
+                            <button class="action-trigger-btn" id="launchShowroomBtn" type="button">Explore Project &rarr;</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="mobile-projects-list" id="mobileList">
+                <div class="mobile-grid" id="mobileGrid"></div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section" aria-labelledby="about-heading">
+            <div class="section-header">
+                <h2 id="about-heading" class="section-title">About</h2>
+            </div>
+            <div class="about-inner">
+                <p class="about-text">
+                    Frontend developer focused on building clean, accessible, and performant web interfaces.
+                    Comfortable across the stack with React, Next.js, TypeScript, and vanilla web technologies.
+                </p>
+                <ul class="about-list">
+                    <li>Semantic, accessible HTML</li>
+                    <li>Modern CSS with responsive design</li>
+                    <li>Component-driven React architecture</li>
+                    <li>Progressive enhancement</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+            <div class="section-header">
+                <h2 id="contact-heading" class="section-title">Contact</h2>
+                <p class="section-subtitle">Open to freelance, collaboration, and frontend opportunities.</p>
+            </div>
+            <div class="contact-inner">
+                <a href="https://github.com/bassim-ghaly-14" class="contact-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="mailto:bassim.ghaly@gmail.com" class="contact-link">Email</a>
+            </div>
+        </section>
+
     </main>
 
-    <div class="project-viewer" id="projectViewer" aria-hidden="true">
-        <button class="close-btn" id="closeViewer" aria-label="Close Viewer">&times;</button>
-        
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p class="curator-signature">
+                Curated by <span class="signature-handwritten">chef-belly</span>
+            </p>
+        </div>
+    </footer>
+
+    <div class="project-viewer" id="projectViewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" aria-hidden="true">
+        <button class="close-btn" id="closeViewer" type="button" aria-label="Close viewer">&times;</button>
+
         <div class="viewer-content">
             <div class="iframe-wrapper">
                 <iframe src="" id="projectIframe" title="Project Live Preview"></iframe>
-                <div class="iframe-loader" id="iframeLoader">Loading Cinematic Preview...</div>
+                <div class="iframe-loader" id="iframeLoader">Loading preview...</div>
             </div>
-            
+
             <div class="project-details">
-                <h2 id="viewedProjectTitle">Project Title</h2>
-                <p id="viewedProjectDesc">Detailed system architecture breakdown and tech stack analysis.</p>
+                <h3 id="viewedProjectTitle">Project Title</h3>
+                <p id="viewedProjectDesc">Project description.</p>
                 <div class="project-links">
-                    <a href="#" id="liveLink" target="_blank" class="btn btn-primary">Launch Live Site</a>
-                    <a href="#" id="repoLink" target="_blank" class="btn btn-secondary">View GitHub</a>
+                    <a href="#" id="liveLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Launch Live Site</a>
+                    <a href="#" id="repoLink" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View GitHub</a>
                 </div>
             </div>
         </div>
@@ -156,4 +175,3 @@
     <script src="js/app.js"></script>
 </body>
 </html>
-<!-- chef-belly  -->

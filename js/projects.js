@@ -1,10 +1,17 @@
-// Structured dataset housing portfolio profiles
+// Portfolio project dataset
 const myProjects = [
     {
         id: 1,
+        slug: "pineup",
         title: "PineUp",
+        tagline: "Full-featured social networking platform",
         description:
             "A modern full-featured social networking platform with real-time interactions, infinite feeds, nested comments, social graphs, JWT authentication, and a scalable feature-based architecture built with Next.js and TypeScript.",
+        highlights: [
+            "Real-time interactions via WebSocket",
+            "Infinite feeds and nested comments",
+            "JWT authentication and social graphs"
+        ],
         techs: [
             "Next.js",
             "React 19",
@@ -15,14 +22,24 @@ const myProjects = [
             "Axios",
             "WebSocket"
         ],
-        vercelUrl: "https://pineup.vercel.app/",
-        githubUrl: "https://github.com/bassim-ghaly-14/pineup"
+        category: "fullstack",
+        featured: true,
+        favicon: "assets/projects/pineup/favicon.svg",
+        liveUrl: "https://pineup.vercel.app/",
+        repoUrl: "https://github.com/bassim-ghaly-14/pineup"
     },
     {
         id: 2,
-        title: "TRADO",
+        slug: "trado",
+        title: "TRADO Store",
+        tagline: "Production-oriented e-commerce storefront",
         description:
             "A production-oriented e-commerce storefront featuring a complete shopping lifecycle, JWT authentication, protected routes, Stripe checkout, and a scalable server-state architecture powered by TanStack Query.",
+        highlights: [
+            "Complete shopping lifecycle with Stripe",
+            "Protected routes and JWT auth",
+            "Server-state architecture via TanStack Query"
+        ],
         techs: [
             "React 19",
             "Vite",
@@ -33,14 +50,24 @@ const myProjects = [
             "Formik",
             "Stripe"
         ],
-        vercelUrl: "https://trado-green.vercel.app/",
-        githubUrl: "https://github.com/bassim-ghaly-14/route-course"
+        category: "frontend",
+        featured: true,
+        favicon: "assets/projects/trado/favicon.svg",
+        liveUrl: "https://trado-green.vercel.app/",
+        repoUrl: "https://github.com/bassim-ghaly-14/route-course"
     },
     {
         id: 3,
+        slug: "sky-weather",
         title: "SKY Weather",
+        tagline: "Dependency-free weather application",
         description:
             "A dependency-free weather application with geolocation, accessible city autocomplete, persistent location preferences, and a secure serverless API proxy for real-time weather and 5-day forecasts.",
+        highlights: [
+            "Geolocation and city autocomplete",
+            "Persistent location preferences",
+            "Serverless API proxy integration"
+        ],
         techs: [
             "HTML5",
             "CSS3",
@@ -49,14 +76,24 @@ const myProjects = [
             "OpenWeatherMap API",
             "Vercel Serverless"
         ],
-        vercelUrl: "https://sky-pple.vercel.app/",
-        githubUrl: "https://github.com/bassim-ghaly-14/sky"
+        category: "frontend",
+        featured: true,
+        favicon: "assets/projects/sky-weather/favicon.svg",
+        liveUrl: "https://sky-pple.vercel.app/",
+        repoUrl: "https://github.com/bassim-ghaly-14/sky"
     },
     {
         id: 4,
+        slug: "pine-notes",
         title: "Pine Notes",
+        tagline: "Privacy-first dependency-free notes application",
         description:
             "A privacy-first, dependency-free notes application built with Vanilla JavaScript, featuring local-first data storage, Markdown editing, task management, command palette, keyboard-first workflows, automated data migrations, backups, and automated testing.",
+        highlights: [
+            "Local-first data storage with Markdown",
+            "Command palette and keyboard workflows",
+            "Automated migrations, backups, and testing"
+        ],
         techs: [
             "HTML5",
             "CSS3",
@@ -66,7 +103,10 @@ const myProjects = [
             "Markdown",
             "Node.js"
         ],
-        vercelUrl: "https://pine-notes.vercel.app/",
-        githubUrl: "https://github.com/bassim-ghaly-14/pine-notes"
+        category: "frontend",
+        featured: true,
+        favicon: "assets/projects/pine-notes/favicon.svg",
+        liveUrl: "https://pine-notes.vercel.app/",
+        repoUrl: "https://github.com/bassim-ghaly-14/pine-notes"
     }
 ];

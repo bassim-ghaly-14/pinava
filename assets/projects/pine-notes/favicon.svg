@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+    <defs>
+        <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#bf953f"/>
+            <stop offset="50%" stop-color="#fcf6ba"/>
+            <stop offset="100%" stop-color="#b38728"/>
+        </linearGradient>
+    </defs>
+
+    <rect width="32" height="32" rx="7" fill="#070707"/>
+
+    <!-- Note -->
+    <path
+        d="M9 5.5
+           H19.5
+           L24 10
+           V25.5
+           H9
+           Z"
+        fill="none"
+        stroke="url(#gold)"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+    />
+
+    <!-- Fold -->
+    <path
+        d="M19.5 5.5
+           V10
+           H24"
+        fill="none"
+        stroke="url(#gold)"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+    />
+
+    <!-- Writing -->
+    <path
+        d="M12 14
+           H21
+           M12 17.5
+           H21
+           M12 21
+           H18"
+        fill="none"
+        stroke="url(#gold)"
+        stroke-width="1.2"
+        stroke-linecap="round"
+    />
+
+    <!-- Small accent -->
+    <circle
+        cx="11"
+        cy="10"
+        r="0.8"
+        fill="url(#gold)"
+    />
+</svg>

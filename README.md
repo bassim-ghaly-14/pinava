@@ -1,36 +1,50 @@
-# Pinava Curator — Digital Showroom
+# Pinava — Frontend Developer Portfolio
 
-Pinava Curator is a premium, immersive digital portfolio built to showcase creative web development projects. Designed around a sleek, dark-themed geometric aesthetic, the platform arranges past works as interactive orbital petals flanking a central golden brand insignia. Clicking a project triggers a cinematic dispersion animation, revealing a fully integrated live preview embedded directly from Vercel alongside repository documentation.
+Pinava is a lightweight personal portfolio for a frontend developer. It is built with plain HTML, CSS, and JavaScript. No framework, no build step.
 
-## ✨ Features
+## Features
 
-- **Interactive Sacred Geometry UI:** Utilizes mathematical layout principles to dynamically arrange project nodes in an organic, orbital configuration.
-- **Cinematic Motion Design:** Powered by the native **Web Animations API (WAAPI)** for high-performance, fluid explosion and blur transitions without third-party rendering overhead.
-- **Embedded Live Previews:** Features an isolated `<iframe>` viewer subsystem equipped with dynamic network loaders to preview external Vercel applications live without leaving the page.
-- **Asynchronous DOM Generation:** Zero manual HTML mapping. Project nodes are structural data objects compiled at runtime.
-- **Responsive Architecture:** Automatically switches from an advanced graphical canvas layout on desktop viewports to an ergonomic, high-contrast grid infrastructure on mobile devices.
+- Personal hero section with core tech stack and CV download
+- Selected work section with desktop split layout and mobile responsive cards
+- Project viewer modal with keyboard accessibility
+- Skip link, focus management, and semantic structure
+- Responsive from 320px up to 1920px
 
----
+## Project Architecture
 
-## 📂 Project Architecture
-
-```text
-pinava-curator/
-│
-├── index.html          # Core semantic DOM skeleton
-├── css/
-│   └── style.css       # Core layout styling, theme tokens, and spatial rules
-│
-├── js/
-│   ├── app.js          # DOM Controller and runtime application lifecycle
-│   ├── projects.js     # Structured dataset for portfolio entries
-│   └── animation.js    # Math-driven WAAPI layout engine and physics
-
-The internal animation engine recalculates spatial angles, balances node dispersion vectors, and updates the mobile viewport layout instantly.
-⚡ Tech Stack
- Structure: Semantic HTML5
- Typography & Styling: Advanced CSS3 (Custom Variables, Native Clamping, Clip-Paths)
- Engine Logic: Vanilla JavaScript (ES6+ Modules, Clean State Operations)
- Motion Profiles: Web Animations API (WAAPI)
- Hosting Environment: Optimized for seamless routing via Vercel / GitHub Pages
 ```
+pinava/
+├── index.html              # Semantic page structure
+├── css/
+│   └── styles.css          # Layout, theme tokens, responsive rules
+├── js/
+│   ├── app.js              # App controller, modal, accessibility
+│   └── projects.js         # Portfolio project data
+├── assets/
+│   ├── favicon.svg         # Site favicon
+│   └── projects/
+│       ├── pineup/favicon.svg
+│       ├── trado/favicon.svg
+│       ├── sky-weather/favicon.svg
+│       └── pine-notes/favicon.svg
+└── cv/
+    └── cv.pdf              # Placeholder location for CV (not included)
+```
+
+## Tech Stack
+
+- Semantic HTML5
+- CSS3 (custom properties, clamp, flex, grid, responsive)
+- Vanilla JavaScript (ES6+, no dependencies)
+- Self-hosted SVG assets
+
+## Setup
+
+Open `index.html` in a browser or serve the folder with any static server.
+
+## Manual Steps
+
+- Replace `[Your Name]` in the hero with the actual name
+- Drop a real `cv.pdf` into the `cv/` folder
+- Update contact links in the contact section
+- Replace project favicon SVGs with branded assets if available
