@@ -513,7 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     navLinks.forEach(link => {
                         link.classList.toggle(
                             "active",
-                            link.getAttribute("data-nav") === id
+                            link.dataset.nav === id
                         );
                     });
                 }
