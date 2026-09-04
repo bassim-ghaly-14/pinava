@@ -3,7 +3,7 @@ const myProjects = [
     {
         id: 1,
         slug: "pineup",
-        title: "PineUp",
+        title: "PineUp Network",
         tagline: "Full-featured social networking platform",
         description:
             "A modern full-featured social networking platform with real-time interactions, infinite feeds, nested comments, social graphs, JWT authentication, and a scalable feature-based architecture built with Next.js and TypeScript.",
@@ -112,7 +112,7 @@ const myProjects = [
     {
         id: 5,
         slug: "rotix",
-        title: "ROTIX",
+        title: "ROTIX Puzzle",
         tagline: "Cyber-fluid pipeline puzzle game",
         description:
             "A dependency-free cyber-fluid puzzle game where players rotate pipeline nodes to route two independent energy streams into a shared reactor, solve 30 handcrafted levels, and manage a rising pressure system.",
@@ -134,7 +134,7 @@ const myProjects = [
         category: "game",
         featured: false,
         favicon: "assets/projects/rotix/favicon.svg",
-        liveUrl: "https://rotix-game.vercel.app/",
+        liveUrl: "",
         repoUrl: "https://github.com/bassim-ghaly-14/rotix"
     }
 ];
