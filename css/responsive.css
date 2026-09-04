@@ -1,0 +1,60 @@
+/* ============================================================
+   PINAVA — responsive.css
+   All responsive overrides. Breakpoints preserved exactly as
+   originally authored: 1024px, 768px, 480px, 320px.
+   Loaded LAST so overrides always win at equal specificity.
+   ============================================================ */
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+    .showcase-area { display: none; }
+    .mobile-projects-list { display: block; }
+    .projects-section { padding: clamp(2.5rem, 5vw, 4rem) var(--space-lg) clamp(3rem, 6vw, 5rem); }
+    .process-grid { grid-template-columns: repeat(2, 1fr); }
+    /* Reduce GPU cost of backdrop-filter on mobile: many stacked blurred cards
+       are expensive on low-end devices. Solid fallback keeps the visual weight. */
+    .project-card,
+    .contact-card {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(20, 20, 20, 0.72);
+    }
+}
+
+@media (max-width: 768px) {
+    .header-inner { padding: var(--space-md); }
+    .hero { padding: clamp(2.5rem, 6vw, 4rem) var(--space-lg) clamp(3rem, 7vw, 5rem); }
+    .viewer-content { height: 95vh; width: 95%; }
+    .project-details { flex-direction: column; align-items: flex-start; }
+    .project-details p { margin: var(--space-sm) 0; }
+    .project-links { width: 100%; justify-content: space-between; }
+    .viewer-case-study { max-height: 38vh; }
+    .contact-cta {
+        padding: var(--space-xl) var(--space-lg);
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .cta-action { width: 100%; }
+    .about-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .header-nav { gap: var(--space-md); }
+    .header-nav-link { font-size: var(--text-xs); }
+    .hero-actions { flex-direction: column; }
+    .hero-actions .btn { width: 100%; }
+    .hero-cv-actions { flex-direction: column; }
+    .hero-cv-actions .btn { width: 100%; }
+    .process-grid { grid-template-columns: 1fr; gap: var(--space-lg); }
+    .principles-list { flex-direction: column; gap: var(--space-sm); }
+    .principle { flex-direction: column; gap: var(--space-xs); }
+    .principle-name::after { content: none; }
+    .stack-groups { grid-template-columns: 1fr; }
+    .mobile-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 320px) {
+    .hero-title { font-size: 1.5rem; }
+    .section-title { font-size: 1.25rem; }
+    .header-brand-text { display: none; }
+}

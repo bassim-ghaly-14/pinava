@@ -26,7 +26,10 @@ pinava/
 ├── robots.txt              # Crawler policy + sitemap reference
 ├── sitemap.xml             # Single-page sitemap
 ├── css/
-│   └── styles.css          # Design tokens, layout, responsive rules, @font-face
+│   ├── base.css              # Tokens, reset, a11y, motion/reveal, scrollbar, utilities
+│   ├── layout.css            # Header/nav, Hero (+ desktop editor), buttons
+│   ├── sections.css          # Projects, About, How I Build, Stack, Contact, Footer, Viewer modal
+│   └── responsive.css        # 1024px / 768px / 480px / 320px overrides
 ├── js/
 │   ├── app.js              # App controller, modal, iframe fallback, accessibility
 │   └── projects.js         # Portfolio project data (including optional case studies)
