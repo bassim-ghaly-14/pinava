@@ -230,4 +230,44 @@ const myProjects = [
         liveUrl: "https://wardyan.vercel.app/",
         repoUrl: "https://github.com/bassim-ghaly-14/Wardyan"
     },
+    {
+    id: 7,
+    slug: "krava",
+    title: "KRAVA Store",
+    tagline: "Dependency-free streetwear e-commerce storefront",
+    description:
+        "A lightweight streetwear e-commerce storefront built with HTML, CSS, and vanilla JavaScript, featuring product variants, live stock awareness, persistent cart state, coupon discounts, URL-synced product selections, and a simulated checkout flow.",
+    highlights: [
+        "Color and size variants with live stock awareness",
+        "Persistent cart with variant-based line items and coupons",
+        "URL-synced product selections and simulated checkout"
+    ],
+    caseStudy: {
+        challenge:
+            "An e-commerce storefront needs more than a product grid: variants, stock, cart state, discounts, and checkout all have to remain consistent while keeping the implementation lightweight and dependency-free.",
+        approach:
+            "KRAVA uses native ES modules with a centralized pub/sub store that manages cart and coupon state, persists mutations to localStorage, and keeps shared UI synchronized across multiple pages. Product variants remain part of a static catalog, while dedicated modules handle products, cart, checkout, coupons, theme, and the lookbook slider.",
+        decisions: [
+            "Modeled cart line items by product, color, and size so different variants remain independent while adding the same variant again merges its quantity.",
+            "Used a centralized store with pub/sub subscriptions and localStorage persistence to keep the cart badge, cart page, and other shared UI synchronized across pages.",
+            "Synced product color and size selections to the URL with URLSearchParams and history.replaceState, making selected variants shareable and bookmarkable without adding a backend.",
+            "Used the Web Crypto API to generate order IDs instead of predictable sequential identifiers during the simulated checkout flow."
+        ]
+    },
+    techs: [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "ES Modules",
+        "Local Storage",
+        "Web Crypto API",
+        "Font Awesome",
+        "Cloudinary"
+    ],
+    category: "frontend",
+    featured: false,
+    favicon: "assets/projects/krava/favicon.svg",
+    liveUrl: "https://krava-store.vercel.app/",
+    repoUrl: "https://github.com/bassim-ghaly-14/KRAVA-store"
+    },
 ];
