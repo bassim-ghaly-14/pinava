@@ -191,5 +191,43 @@ const myProjects = [
         favicon: "assets/projects/rotix/favicon.svg",
         liveUrl: "https://rotix-game.vercel.app/",
         repoUrl: "https://github.com/bassim-ghaly-14/rotix"
-    }
+    },
+    {
+        id: 6,
+        slug: "wardyan",
+        title: "WARDYAN Store",
+        tagline: "Lightweight flower-shop storefront",
+        description:
+            "A lightweight flower-shop storefront built with HTML, CSS, and vanilla JavaScript, featuring product browsing, product details, a persistent shopping cart, coupon handling, theme switching, and a simulated checkout flow.",
+        highlights: [
+            "Persistent cart, coupons, and theme preferences",
+            "Product details modal with reusable cart and checkout logic",
+            "Responsive storefront with simulated order confirmation"
+        ],
+        caseStudy: {
+            challenge:
+                "A small storefront still needs a coherent shopping lifecycle: product discovery, product details, cart management, discounts, and checkout should work together without introducing framework or backend complexity.",
+            approach:
+                "The application uses native ES modules with a centralized store for cart, coupon, and theme state. Product data remains local, while dedicated modules handle the product grid, cart drawer, coupons, checkout, theme switching, and shared UI behavior.",
+            decisions: [
+                "Used a centralized pub/sub store with localStorage persistence so cart, coupon, and theme state remain consistent across UI updates and page reloads.",
+                "Reused the same cart and checkout logic from both product cards and the product details modal instead of duplicating shopping-flow behavior.",
+                "Kept the storefront dependency-free and backend-free, using a simulated checkout flow to demonstrate the complete client-side shopping experience without introducing unnecessary infrastructure."
+            ]
+        },
+        techs: [
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "ES Modules",
+            "Local Storage",
+            "Font Awesome",
+            "Cloudinary"
+        ],
+        category: "frontend",
+        featured: false,
+        favicon: "assets/projects/wardyan/favicon.svg",
+        liveUrl: "https://wardyan.vercel.app/",
+        repoUrl: "https://github.com/bassim-ghaly-14/Wardyan"
+    },
 ];
