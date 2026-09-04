@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             myProjects.forEach(project => {
                 const card = document.createElement("button");
                 card.type = "button";
-                card.className = "project-card";
+                card.className = "project-card" + (project.featured ? " featured" : "");
 
                 const taglineHtml = project.tagline
                     ? `<span class="card-tagline">${project.tagline}</span>`
@@ -253,6 +253,57 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // 6. Scroll Reveal with IntersectionObserver
+    function initScrollReveal() {
+        const revealElements = document.querySelectorAll('.reveal, .reveal-stagger');
+
+        if (!('IntersectionObserver' in window)) {
+            // Fallback: show all content if IO is unavailable
+            revealElements.forEach(el => el.classList.add('revealed'));
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+    }
+
+    // 7. Navigation Active State
+    function initNavActiveState() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.header-nav-link[data-nav]');
+
+        if (!sections.length || !navLinks.length) return;
+
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('data-nav') === id);
+                    });
+                }
+            });
+        }, {
+            threshold: 0.3,
+            rootMargin: '-80px 0px -40% 0px'
+        });
+
+        sections.forEach(section => navObserver.observe(section));
+    }
+
     // Boot App Setup
     initSidebarRegistry();
+    initScrollReveal();
+    initNavActiveState();
 });
