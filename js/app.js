@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const viewedProjectDesc = document.getElementById("viewedProjectDesc");
     const liveLink = document.getElementById("liveLink");
     const repoLink = document.getElementById("repoLink");
+    const viewerCaseStudy = document.getElementById("viewerCaseStudy");
 
     // Projects data is loaded via js/projects.js — degrade gracefully if it fails
     if (typeof myProjects === "undefined" || !Array.isArray(myProjects)) {
@@ -50,6 +51,78 @@ document.addEventListener("DOMContentLoaded", () => {
             imgEl.src = project.favicon;
         } else {
             imgEl.src = fallbackFavicon;
+        }
+    }
+
+    // Render the optional project case study into the viewer modal.
+    // Built with DOM APIs + textContent only (no innerHTML with data).
+    // Gracefully hides the container when caseStudy is missing or incomplete.
+    function renderCaseStudy(caseStudy) {
+        if (!viewerCaseStudy) return;
+
+        viewerCaseStudy.innerHTML = "";
+
+        const hasChallenge = caseStudy && typeof caseStudy.challenge === "string" && caseStudy.challenge.trim();
+        const hasApproach = caseStudy && typeof caseStudy.approach === "string" && caseStudy.approach.trim();
+        const hasDecisions = Boolean(
+            caseStudy &&
+            Array.isArray(caseStudy.decisions) &&
+            caseStudy.decisions.length > 0 &&
+            caseStudy.decisions.every(d => typeof d === "string" && d.trim())
+        );
+
+        if (!hasChallenge && !hasApproach && !hasDecisions) {
+            viewerCaseStudy.hidden = true;
+            return;
+        }
+
+        viewerCaseStudy.hidden = false;
+
+        const heading = document.createElement("h4");
+        heading.className = "case-study-title";
+        heading.textContent = "Case Study";
+        viewerCaseStudy.appendChild(heading);
+
+        const addBlock = (label, text) => {
+            if (!text) return;
+            const block = document.createElement("div");
+            block.className = "case-study-block";
+
+            const blockHeading = document.createElement("h5");
+            blockHeading.className = "case-study-subtitle";
+            blockHeading.textContent = label;
+            block.appendChild(blockHeading);
+
+            const paragraph = document.createElement("p");
+            paragraph.className = "case-study-text";
+            paragraph.textContent = text;
+            block.appendChild(paragraph);
+
+            viewerCaseStudy.appendChild(block);
+        };
+
+        if (hasChallenge) addBlock("Challenge", caseStudy.challenge.trim());
+        if (hasApproach) addBlock("Approach", caseStudy.approach.trim());
+
+        if (hasDecisions) {
+            const block = document.createElement("div");
+            block.className = "case-study-block";
+
+            const blockHeading = document.createElement("h5");
+            blockHeading.className = "case-study-subtitle";
+            blockHeading.textContent = "Key Decisions";
+            block.appendChild(blockHeading);
+
+            const list = document.createElement("ul");
+            list.className = "case-study-list";
+            caseStudy.decisions.forEach(decision => {
+                const item = document.createElement("li");
+                item.textContent = decision.trim();
+                list.appendChild(item);
+            });
+            block.appendChild(list);
+
+            viewerCaseStudy.appendChild(block);
         }
     }
 
@@ -210,6 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         viewedProjectTitle.innerText = project.title;
         viewedProjectDesc.innerText = project.description;
+        renderCaseStudy(project.caseStudy);
 
         if (project.liveUrl) {
             liveLink.href = project.liveUrl;
@@ -261,6 +335,11 @@ document.addEventListener("DOMContentLoaded", () => {
         projectIframe.title = "Project Live Preview";
         iframeLoader.hidden = true;
         iframeFallback.hidden = true;
+
+        if (viewerCaseStudy) {
+            viewerCaseStudy.innerHTML = "";
+            viewerCaseStudy.hidden = true;
+        }
 
         if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
             lastFocusedElement.focus();

@@ -12,6 +12,17 @@ const myProjects = [
             "Infinite feeds and nested comments",
             "JWT authentication and social graphs"
         ],
+        caseStudy: {
+            challenge:
+                "A social platform combines many interacting features — auth, feeds, nested comments, and real-time updates — so the hard part is not any single screen, but keeping server state consistent across all of them as the app grows.",
+            approach:
+                "The app is structured as feature-oriented modules, each owning its components, hooks, and API layer. TanStack Query acts as the single source of truth for server state, with cache invalidation cascading between related features.",
+            decisions: [
+                "Chose TanStack Query over manual effect-based fetching so caching, background refetching, and invalidation stay predictable instead of scattered across components.",
+                "Adopted a feature-oriented folder structure so each social feature — feed, comments, profile — can evolve without touching unrelated code.",
+                "Used WebSocket events to reconcile real-time interactions directly with the Query cache rather than duplicating state in local stores."
+            ]
+        },
         techs: [
             "Next.js",
             "React 19",
@@ -40,6 +51,17 @@ const myProjects = [
             "Protected routes and JWT auth",
             "Server-state architecture via TanStack Query"
         ],
+        caseStudy: {
+            challenge:
+                "E-commerce interfaces fail when cart, session, and checkout state drift out of sync. The challenge was keeping the full shopping lifecycle consistent — browsing to Stripe payment — while keeping the codebase maintainable.",
+            approach:
+                "The shopping flow is modeled as explicit, protected route stages. Server state is centralized in TanStack Query with per-resource cache keys, and checkout/payment logic lives in a dedicated module so the payment flow stays isolated and testable.",
+            decisions: [
+                "Guarded authenticated routes at the router level so protected pages are unreachable by URL manipulation, not just hidden in the UI.",
+                "Used TanStack Query cache invalidation to keep cart, session, and order data consistent after checkout instead of manual state juggling.",
+                "Managed checkout validation with Formik so field errors are declared per-field rather than handled with ad-hoc conditionals."
+            ]
+        },
         techs: [
             "React 19",
             "Vite",
@@ -68,6 +90,17 @@ const myProjects = [
             "Persistent location preferences",
             "Serverless API proxy integration"
         ],
+        caseStudy: {
+            challenge:
+                "Weather data requires an API key, but a dependency-free static site has nowhere to keep secrets. The challenge was exposing live weather and 5-day forecasts without shipping credentials or pulling in a framework.",
+            approach:
+                "The client stays pure HTML, CSS, and ES modules, while the OpenWeatherMap call is moved behind a small Vercel serverless function that injects the key at runtime — the browser only ever talks to the proxy.",
+            decisions: [
+                "Proxied the weather API through a serverless function so the API key never reaches the browser bundle.",
+                "Persisted the last selected location in localStorage so the app opens on relevant data without requesting geolocation on every visit.",
+                "Built the entire UI with zero runtime dependencies to keep the app fast, portable, and fully auditable."
+            ]
+        },
         techs: [
             "HTML5",
             "CSS3",
@@ -94,6 +127,17 @@ const myProjects = [
             "Command palette and keyboard workflows",
             "Automated migrations, backups, and testing"
         ],
+        caseStudy: {
+            challenge:
+                "Notes applications live or die on data trust. Without a backend, the challenge was making localStorage feel as reliable as a database — schema changes, corrupt data, and accidental loss all had to be handled defensively.",
+            approach:
+                "The app is local-first by design: a versioned storage schema with an automated migration pipeline, exportable backups, and a command palette that operates directly on local data so every workflow works offline and stays private.",
+            decisions: [
+                "Versioned the storage schema and automated migrations so new features can change the data shape without breaking existing notes.",
+                "Wrapped every read and write in defensive parsing and validation so corrupt or tampered data degrades gracefully instead of crashing the app.",
+                "Added automated tests around migrations and core logic to make local persistence safe to refactor."
+            ]
+        },
         techs: [
             "HTML5",
             "CSS3",
@@ -121,6 +165,17 @@ const myProjects = [
             "Dual-channel power propagation and pressure system",
             "English/Arabic localization with full RTL support"
         ],
+        caseStudy: {
+            challenge:
+                "A puzzle game needs rules the player can trust and levels that are actually solvable. With two independent energy streams and a rising pressure system, it was easy to accidentally create impossible — or trivial — levels.",
+            approach:
+                "The grid is modeled as a graph and a built-in solver propagates both energy channels simultaneously, so every one of the 30 handcrafted levels is verified solvable. Player progression persists across sessions.",
+            decisions: [
+                "Solved each level's grid as a graph with dual-channel propagation, guaranteeing no shipped level is impossible.",
+                "Kept game logic deterministic and separated from rendering so rotations and pressure resolve identically on every run.",
+                "Shipped English/Arabic localization with full RTL layout support from the start rather than retrofitting it later."
+            ]
+        },
         techs: [
             "HTML5",
             "CSS3",
@@ -134,7 +189,7 @@ const myProjects = [
         category: "game",
         featured: false,
         favicon: "assets/projects/rotix/favicon.svg",
-        liveUrl: "",
+        liveUrl: "https://rotix-game.vercel.app/",
         repoUrl: "https://github.com/bassim-ghaly-14/rotix"
     }
 ];
