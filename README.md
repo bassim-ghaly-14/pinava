@@ -22,6 +22,7 @@ Pinava is a lightweight personal portfolio for a frontend developer. It is built
 ```
 pinava/
 ├── index.html              # Semantic page structure, SEO metadata, JSON-LD
+├── 404.html                # Self-contained branded 404 page (zero JS, noindex)
 ├── robots.txt              # Crawler policy + sitemap reference
 ├── sitemap.xml             # Single-page sitemap
 ├── css/
@@ -58,6 +59,7 @@ Open `index.html` in a browser or serve the folder with any static server.
 
 - The canonical domain is `https://pinava-curator.vercel.app/` (used for canonical, Open Graph, sitemap, and JSON-LD).
 - "View CV" opens `cv/cv.pdf` in a new tab using the browser's native PDF viewer — no PDF library or embedding involved.
+- The custom `404.html` is fully self-contained: zero JavaScript, no external font or stylesheet requests, and a small inline style block that reuses the site's gold-on-dark design tokens. It is `noindex` and intentionally excluded from `sitemap.xml`. On Vercel it is served automatically for unmatched routes.
 - If a live project blocks iframe embedding (X-Frame-Options / CSP frame-ancestors), the viewer shows a fallback panel with an "Open Live Site" link after a one-shot timeout. The external link is always available as a guaranteed fallback.
 - Case studies are optional: each project in `projects.js` may define a `caseStudy` object (`challenge`, `approach`, `decisions`). The viewer renders it safely and hides the container entirely when it is missing or incomplete.
 
