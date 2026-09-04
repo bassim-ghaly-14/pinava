@@ -56,10 +56,29 @@
 </head>
 <body>
 
+    <!--
+        PAGE ARCHITECTURE — every section below is intentionally static markup in
+        this single document. Partials are NOT fetched at runtime: that would delay
+        FCP/LCP, hide content until JS runs (the .reveal/.reveal-stagger observer
+        only registers elements present at load), and break no-JS/SEO behavior.
+
+        body
+        ├── .bg-overlay / .skip-link
+        ├── <header> — brand + primary nav (data-nav -> app.js scroll highlight)
+        ├── <main>
+        │   ├── #hero        — intro, CV actions, MacBook editor (static, design-approved)
+        │   ├── #projects    — JS mount points (#geometricMenu, #glassPresenter, #mobileGrid)
+        │   ├── #how-i-build · #tech-stack · #about · contact CTA · #contact (static)
+        ├── <footer> — social links
+        └── #projectViewer   — modal; REQUIRED in initial HTML (app.js binds to it directly)
+    -->
+
     <div class="bg-overlay"></div>
 
     <a href="#main-content" class="skip-link">Skip to content</a>
 
+    <!-- HEADER / PRIMARY NAV — .header-nav-link[data-nav] ids (#projects/#about/#contact)
+         are matched against section[id] by app.js initNavActiveState(). -->
     <header class="site-header reveal">
         <div class="header-inner">
             <a href="#hero" class="header-brand" aria-label="Pinava home">
@@ -76,6 +95,9 @@
 
     <main id="main-content" class="site-main">
 
+        <!-- HERO — static intro, CV actions, and the "portfolio.ts" MacBook editor
+             (hand-tokenized spans + blinking .editor-caret). Desktop composition and
+             320px stacking are design-approved: do not restructure. -->
         <section id="hero" class="hero" aria-labelledby="hero-heading">
             <div class="hero-inner reveal-stagger">
                 <p class="hero-eyebrow">Frontend Developer · Tanta, Egypt</p>
@@ -99,9 +121,38 @@
                     <a href="cv/cv.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View CV <span aria-hidden="true">&nearr;</span><span class="visually-hidden">(opens in a new tab)</span></a>
                     <a href="cv/cv.pdf" class="btn btn-secondary" download="cv.pdf">Download CV</a>
                 </div>
+
+                <div class="hero-editor" aria-hidden="true">
+                    <div class="editor-chrome">
+                        <div class="editor-dots">
+                            <span class="editor-dot"></span>
+                            <span class="editor-dot"></span>
+                            <span class="editor-dot"></span>
+                        </div>
+                        <span class="editor-title">portfolio.ts</span>
+                    </div>
+                    <pre class="editor-code"><code><span class="code-line"><span class="line-num"> 1</span><span class="tok-kw">const</span> <span class="tok-var">developer</span> <span class="tok-punc">=</span> <span class="tok-punc">{</span></span>
+<span class="code-line"><span class="line-num"> 2</span>  <span class="tok-prop">name</span><span class="tok-punc">:</span> <span class="tok-str">"Bassim Ghaly"</span><span class="tok-punc">,</span></span>
+<span class="code-line"><span class="line-num"> 3</span>  <span class="tok-prop">role</span><span class="tok-punc">:</span> <span class="tok-str">"Frontend Developer"</span><span class="tok-punc">,</span></span>
+<span class="code-line"><span class="line-num"> 4</span>  <span class="tok-prop">location</span><span class="tok-punc">:</span> <span class="tok-str">"Tanta, Egypt"</span><span class="tok-punc">,</span></span>
+<span class="code-line"><span class="line-num"> 5</span></span>
+<span class="code-line"><span class="line-num"> 6</span>  <span class="tok-prop">stack</span><span class="tok-punc">:</span> <span class="tok-punc">[</span><span class="tok-str">"React"</span><span class="tok-punc">,</span> <span class="tok-str">"Next.js"</span><span class="tok-punc">,</span> <span class="tok-str">"TypeScript"</span><span class="tok-punc">],</span></span>
+<span class="code-line"><span class="line-num"> 7</span></span>
+<span class="code-line"><span class="line-num"> 8</span>  <span class="tok-prop">values</span><span class="tok-punc">:</span> <span class="tok-punc">[</span></span>
+<span class="code-line"><span class="line-num"> 9</span>    <span class="tok-str">"Clean code"</span><span class="tok-punc">,</span></span>
+<span class="code-line"><span class="line-num">10</span>    <span class="tok-str">"Performance"</span><span class="tok-punc">,</span></span>
+<span class="code-line"><span class="line-num">11</span>    <span class="tok-str">"Accessibility"</span><span class="tok-punc">,</span></span>
+<span class="code-line"><span class="line-num">12</span>  <span class="tok-punc">],</span></span>
+<span class="code-line"><span class="line-num">13</span><span class="tok-punc">};</span><span class="editor-caret" aria-hidden="true"></span></span></code></pre>
+                </div>
             </div>
         </section>
 
+        <!-- PROJECTS — desktop registry (#geometricMenu) and presenter fields
+             (#projectIndex/#projectTitle/#projectTagline/#projectDesc/#projectFavicon/
+             #techTags/#launchShowroomBtn) plus mobile grid (#mobileGrid) are populated
+             by js/app.js from js/projects.js. These mount points must exist before the
+             deferred scripts run. <noscript> below is the no-JS fallback. -->
         <section id="projects" class="projects-section" aria-labelledby="projects-heading">
             <div class="section-header reveal">
                 <h2 id="projects-heading" class="section-title">What I’ve Built</h2>
@@ -140,6 +191,7 @@
             </div>
         </section>
 
+        <!-- HOW I BUILD — static 4-step process + principles strip. -->
         <section id="how-i-build" class="how-build-section" aria-labelledby="how-build-heading">
             <div class="section-header reveal">
                 <h2 id="how-build-heading" class="section-title">How I Build</h2>
@@ -186,6 +238,7 @@
             </div>
         </section>
 
+        <!-- TECH STACK — static, grouped tags, no JS required. -->
         <section id="tech-stack" class="tech-stack-section" aria-labelledby="tech-stack-heading">
             <div class="section-header reveal">
                 <h2 id="tech-stack-heading" class="section-title">Tech Stack</h2>
@@ -199,6 +252,7 @@
                         <li class="tech-tag">CSS3</li>
                         <li class="tech-tag">JavaScript</li>
                         <li class="tech-tag">TypeScript</li>
+                        <li class="tech-tag">SASS</li>
                     </ul>
                 </div>
                 <div class="stack-group">
@@ -216,19 +270,30 @@
                     </ul>
                 </div>
                 <div class="stack-group">
-                    <h3 class="stack-group-title">Data &amp; Tooling</h3>
+                    <h3 class="stack-group-title">Data &amp; State Management</h3>
                     <ul class="stack-tags">
                         <li class="tech-tag">TanStack Query</li>
                         <li class="tech-tag">Redux Toolkit</li>
+                        <li class="tech-tag">Zustand</li>
                         <li class="tech-tag">Axios</li>
+                    </ul>
+                </div>
+                <div class="stack-group">
+                    <h3 class="stack-group-title">Tools</h3>
+                    <ul class="stack-tags">
                         <li class="tech-tag">Git</li>
                         <li class="tech-tag">GitHub</li>
                         <li class="tech-tag">Vercel</li>
+                        <li class="tech-tag">Cloudinary</li>
+                        <li class="tech-tag">Stripe</li>
+                        <li class="tech-tag">OpenWeatherMap</li>
+                        <li class="tech-tag">VS Code</li>
                     </ul>
                 </div>
             </div>
         </section>
 
+        <!-- ABOUT — static bio + highlights list. -->
         <section id="about" class="about-section" aria-labelledby="about-heading">
             <div class="section-header reveal">
                 <h2 id="about-heading" class="section-title">About</h2>
@@ -253,6 +318,7 @@
             </div>
         </section>
 
+        <!-- CONTACT CTA — transition banner linking down to #contact. -->
         <div class="contact-cta reveal" aria-labelledby="cta-heading">
             <div class="cta-content">
                 <h2 id="cta-heading" class="cta-title">Have an idea worth building?</h2>
@@ -261,6 +327,7 @@
             <a href="#contact" class="btn btn-primary cta-action">Let’s Talk &rarr;</a>
         </div>
 
+        <!-- CONTACT — static cards: email, phone, LinkedIn, GitHub. -->
         <section id="contact" class="contact-section" aria-labelledby="contact-heading">
             <div class="section-header reveal">
                 <h2 id="contact-heading" class="section-title">Contact</h2>
@@ -319,6 +386,7 @@
 
     </main>
 
+    <!-- FOOTER — social links + signature. -->
     <footer class="site-footer">
         <div class="footer-inner">
             <ul class="footer-social" aria-label="Social profiles">
@@ -346,21 +414,36 @@
                 </li>
             </ul>
             <p class="curator-signature">
-                Curated by <span class="signature-handwritten">Bassim Ghaly</span>
+                Curated by <span class="signature-handwritten">Bassim ghaly</span>
             </p>
         </div>
     </footer>
 
-    <div class="project-viewer" id="projectViewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle" aria-hidden="true">
+    <!-- PROJECT VIEWER MODAL — app.js binds the focus trap, Escape handling, iframe
+         lifecycle (lazy src, load timeout, fallback, cleanup) and scroll locking
+         directly to these nodes, some without null guards. This markup MUST remain
+         in the initial document; do not move it into a runtime-fetched partial. -->
+    <div class="project-viewer" id="projectViewer" role="dialog" aria-modal="true" aria-labelledby="viewedProjectTitle" aria-hidden="true">
         <button class="close-btn" id="closeViewer" type="button" aria-label="Close viewer">&times;</button>
 
         <div class="viewer-content">
-            <div class="iframe-wrapper">
-                <iframe id="projectIframe" title="Project Live Preview" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
-                <div class="iframe-loader" id="iframeLoader" hidden>Loading preview...</div>
-                <div class="iframe-fallback" id="iframeFallback" hidden>
-                    <p>Live preview unavailable in embedded mode.</p>
-                    <a href="#" id="iframeFallbackLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Live Site</a>
+            <div class="preview-frame">
+                <div class="preview-frame-header" aria-hidden="true">
+                    <div class="preview-frame-dots">
+                        <span class="preview-dot"></span>
+                        <span class="preview-dot"></span>
+                        <span class="preview-dot"></span>
+                    </div>
+                    <span class="preview-frame-label">Live Preview</span>
+                    <span class="preview-frame-status"><span class="preview-status-dot"></span>Live</span>
+                </div>
+                <div class="iframe-wrapper">
+                    <iframe id="projectIframe" title="Project Live Preview" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                    <div class="iframe-loader" id="iframeLoader" hidden>Loading preview...</div>
+                    <div class="iframe-fallback" id="iframeFallback" hidden>
+                        <p>Live preview unavailable in embedded mode.</p>
+                        <a href="#" id="iframeFallbackLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Live Site</a>
+                    </div>
                 </div>
             </div>
 
