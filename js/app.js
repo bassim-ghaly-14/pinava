@@ -422,7 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const navObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
+                    const id = entry.target.id;
                     navLinks.forEach(link => {
                         link.classList.toggle('active', link.getAttribute('data-nav') === id);
                     });
