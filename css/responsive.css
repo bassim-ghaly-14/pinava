@@ -38,8 +38,36 @@
 }
 
 @media (max-width: 480px) {
+    /* Mobile typography scale. The base type tokens are clamp(min, vw, max); on
+       narrow screens the vw term falls below the desktop minimum, so every token
+       sat at its desktop floor and phone copy rendered at ~11-13px — a desktop
+       page scaled down. Reassert a deliberately larger, coherent floor on the
+       tokens themselves so body, nav, buttons, cards and the modal scale together
+       instead of leaving desktop-minimum type intact on phones. */
+    :root {
+        --text-xs: clamp(0.75rem, 1.1vw, 0.8125rem);
+        --text-sm: clamp(0.875rem, 1.35vw, 0.9375rem);
+        --text-base: clamp(1rem, 1.5vw, 1.0625rem);
+        --text-md: clamp(1.0625rem, 1.7vw, 1.125rem);
+        --text-lg: clamp(1.375rem, 2vw, 1.5rem);
+        --text-xl: clamp(1.6875rem, 2.5vw, 1.875rem);
+        --text-2xl: clamp(2.25rem, 3.5vw, 2.5rem);
+    }
+
+    /* Section gutters: .projects-section already drops to --space-lg at <=1024,
+       but the other full-width sections kept --space-xl (32px) on phones, reading
+       like scaled-down desktop padding. Unify gutters and trim the vertical rhythm
+       so each section actually uses the available mobile viewport. */
+    .projects-section,
+    .how-build-section,
+    .tech-stack-section,
+    .about-section,
+    .contact-section {
+        padding: clamp(2rem, 4vw, 3rem) var(--space-lg) clamp(2.5rem, 5vw, 3.5rem);
+    }
+
     .header-nav { gap: var(--space-md); }
-    .header-nav-link { font-size: var(--text-xs); }
+    .header-nav-link { font-size: var(--text-sm); }
     .hero-actions { flex-direction: column; }
     .hero-actions .btn { width: 100%; }
     .hero-cv-actions { flex-direction: column; }
