@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pinava-curator.vercel.app/sitemap.xml
+Sitemap: https://pinava.vercel.app/sitemap.xml
