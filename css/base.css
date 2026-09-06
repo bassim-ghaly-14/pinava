@@ -99,6 +99,7 @@
 html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
 }
 
 body {
@@ -199,10 +200,6 @@ body {
 }
 
 /* --- Custom Scrollbar (Pinava identity: dark track, restrained gold thumb) --- */
-html {
-    color-scheme: dark;
-}
-
 ::-webkit-scrollbar {
     width: 12px;
     height: 12px;

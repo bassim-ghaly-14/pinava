@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
             this.src = fallbackFavicon;
         };
 
-        if (project && project.favicon) {
+        if (project?.favicon) {
             imgEl.src = project.favicon;
         } else {
             imgEl.src = fallbackFavicon;
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             techTags.innerHTML = "";
 
-            if (project.techs && project.techs.length) {
+            if (project.techs?.length) {
                 project.techs.forEach(tech => {
                     const tag = document.createElement("span");
                     tag.className = "tech-tag";
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 let techHtml = "";
 
-                if (project.techs && project.techs.length) {
+                if (project.techs?.length) {
                     const techSpans = project.techs
                         .map(t => `<span class="card-tech-tag">${t}</span>`)
                         .join("");
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lastFocusedElement = triggerEl || document.activeElement;
 
         projectViewer.classList.add("active");
-        projectViewer.setAttribute("aria-hidden", "false");
+        projectViewer.showModal();
         document.body.classList.add("modal-open");
 
         iframeLoader.hidden = false;
@@ -386,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // 5. Close modal
     function closeProjectViewer() {
         projectViewer.classList.remove("active");
-        projectViewer.setAttribute("aria-hidden", "true");
+        projectViewer.close();
         document.body.classList.remove("modal-open");
 
         // Release iframe resources without triggering a navigation to the parent page
@@ -463,11 +463,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.preventDefault();
                 last.focus();
             }
-        } else {
-            if (document.activeElement === last) {
-                e.preventDefault();
-                first.focus();
-            }
+        } else if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
         }
     });
 
