@@ -270,4 +270,44 @@ const myProjects = [
     liveUrl: "https://krava-store.vercel.app/",
     repoUrl: "https://github.com/bassim-ghaly-14/KRAVA-store"
     },
+    {
+    id: 8,
+    slug: "pineapple-tv",
+    title: "Pineapple TV",
+    tagline: "Movie and TV discovery & personal tracking platform",
+    description:
+        "A movie and TV discovery platform built with Next.js and TypeScript, featuring TMDB-powered discovery, rich media details, personal watchlists and ratings, episode-level progress tracking, runtime API validation, and a server-side architecture that keeps external API credentials secure.",
+    highlights: [
+        "TMDB-powered discovery, search, filters, and rich media details",
+        "Personal watchlists, ratings, watched history, and episode progress",
+        "Server-side API boundary with Zod validation and normalized domain models"
+    ],
+    caseStudy: {
+        challenge:
+            "A media application depends on a third-party API with inconsistent response shapes, sensitive credentials, and a large amount of client-side state. The challenge was keeping external API complexity away from the UI while making discovery and personal tracking feel like one cohesive product.",
+        approach:
+            "Pineapple TV establishes a strict boundary between TMDB and the application domain. Server-side fetchers handle authentication and caching, Zod validates every response, adapters normalize external payloads into stable domain models, and repository-based persistence keeps personal state isolated from the UI.",
+        decisions: [
+            "Kept the TMDB API token strictly server-side and exposed only controlled Route Handlers for client-initiated requests.",
+            "Used Zod schemas and adapters at the external API boundary so UI components consume stable domain models instead of raw TMDB response shapes.",
+            "Built personal state on top of repository classes and a replaceable StorageAdapter, keeping watchlists, ratings, watched history, and episode progress independent from localStorage implementation details.",
+            "Used endpoint-specific caching and route-level revalidation to reduce unnecessary TMDB requests while keeping discovery and detail pages responsive."
+        ]
+    },
+    techs: [
+        "Next.js 14",
+        "React 18",
+        "TypeScript",
+        "Tailwind CSS",
+        "Zod",
+        "TanStack Query",
+        "TMDB API",
+        "Vitest"
+    ],
+    category: "fullstack",
+    featured: false,
+    favicon: "assets/projects/pineapple-tv/favicon.svg",
+    liveUrl: "https://pineapple-tv.vercel.app/",
+    repoUrl: "https://github.com/bassim-ghaly-14/pineapple-tv"
+    },
 ];
