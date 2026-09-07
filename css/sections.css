@@ -244,12 +244,15 @@
 }
 
 
-/* --- Project Category Filters --- */
+/* --- Project Category Filters (fieldset: reset UA chrome, keep flex layout) --- */
 .project-filters {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-sm);
     margin: var(--space-md) 0 var(--space-xl);
+    border: 0;
+    padding: 0;
+    min-inline-size: 0;
 }
 .project-filter-btn {
     padding: var(--space-xs) var(--space-md);
