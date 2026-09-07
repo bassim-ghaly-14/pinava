@@ -110,7 +110,7 @@ const myProjects = [
             "Vercel Serverless"
         ],
         category: "frontend",
-        featured: true,
+        featured: false,
         favicon: "assets/projects/sky-weather/favicon.svg",
         liveUrl: "https://sky-pple.vercel.app/",
         repoUrl: "https://github.com/bassim-ghaly-14/sky"
@@ -148,7 +148,7 @@ const myProjects = [
             "Node.js"
         ],
         category: "frontend",
-        featured: true,
+        featured: false,
         favicon: "assets/projects/pine-notes/favicon.svg",
         liveUrl: "https://pine-notes.vercel.app/",
         repoUrl: "https://github.com/bassim-ghaly-14/pine-notes"
@@ -305,7 +305,7 @@ const myProjects = [
         "Vitest"
     ],
     category: "fullstack",
-    featured: false,
+    featured: true,
     favicon: "assets/projects/pineapple-tv/favicon.svg",
     liveUrl: "https://pineapple-tv.vercel.app/",
     repoUrl: "https://github.com/bassim-ghaly-14/pineapple-tv"

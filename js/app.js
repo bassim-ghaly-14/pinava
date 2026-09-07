@@ -25,10 +25,108 @@ document.addEventListener("DOMContentLoaded", () => {
     const repoLink = document.getElementById("repoLink");
     const viewerCaseStudy = document.getElementById("viewerCaseStudy");
 
+    // Mobile viewer Overview tab nodes
+    const viewerOverviewTitle = document.getElementById("viewerOverviewTitle");
+    const viewerOverviewTagline = document.getElementById("viewerOverviewTagline");
+    const viewerOverviewDesc = document.getElementById("viewerOverviewDesc");
+    const viewerHighlights = document.getElementById("viewerHighlights");
+    const viewerHighlightsBlock = document.getElementById("viewerHighlightsBlock");
+    const viewerTechs = document.getElementById("viewerTechs");
+    const viewerTechsBlock = document.getElementById("viewerTechsBlock");
+    const viewerTabs = Array.from(document.querySelectorAll(".viewer-tab"));
+
     // Projects data is loaded via js/projects.js — degrade gracefully if it fails
     if (typeof myProjects === "undefined" || !Array.isArray(myProjects)) {
         console.warn("Pinava: project data unavailable. Projects section skipped.");
         return;
+    }
+
+    // Featured-first ordering (stable sort preserves original order within
+    // each group). All project listings render from this base list.
+    const orderedProjects = [...myProjects].sort(
+        (a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0)
+    );
+
+    // Filter state — category is single-select, techs are multi-select (AND).
+    const categoryLabels = {
+        fullstack: "Fullstack",
+        frontend: "Frontend",
+        game: "Game"
+    };
+    let activeFilter = "all";
+    let selectedTechs = []; // normalized (lowercased/trimmed) tech keys
+    // Assigned by buildTechFilter(); keeps the trigger label/count in sync
+    // when filters are cleared from the empty state.
+    let updateTechFilterTrigger = null;
+
+    function getVisibleProjects() {
+        let list =
+            activeFilter === "all"
+                ? orderedProjects
+                : orderedProjects.filter(p => p.category === activeFilter);
+
+        // Technology filter: a project must contain EVERY selected tech
+        // (AND matching). Comparison is case-insensitive; no tech selected
+        // means the tech filter is inactive.
+        if (selectedTechs.length) {
+            list = list.filter(
+                p =>
+                    Array.isArray(p.techs) &&
+                    selectedTechs.every(key =>
+                        p.techs.some(
+                            t =>
+                                typeof t === "string" &&
+                                t.trim().toLowerCase() === key
+                        )
+                    )
+            );
+        }
+
+        return list;
+    }
+
+    // Resets both filters back to the default "everything visible" state.
+    function clearAllFilters() {
+        activeFilter = "all";
+        selectedTechs = [];
+
+        document
+            .querySelectorAll("#projectFilters .project-filter-btn")
+            .forEach(btn => {
+                if (btn.dataset.filter) {
+                    btn.setAttribute("aria-pressed", "true");
+                }
+            });
+
+        document
+            .querySelectorAll("#techFilterPanel input[type='checkbox']")
+            .forEach(box => {
+                box.checked = false;
+            });
+
+        updateTechFilterTrigger();
+
+        buildRegistry();
+        buildMobileGrid();
+    }
+
+    // Shared accessible empty state for desktop registry and mobile grid.
+    function buildFiltersEmptyState() {
+        const wrap = document.createElement("div");
+        wrap.className = "filters-empty-state";
+
+        const msg = document.createElement("p");
+        msg.className = "empty-state";
+        msg.textContent = "No projects match the selected filters.";
+
+        const clearBtn = document.createElement("button");
+        clearBtn.type = "button";
+        clearBtn.className = "project-filter-btn empty-clear-btn";
+        clearBtn.textContent = "Clear filters";
+        clearBtn.addEventListener("click", clearAllFilters);
+
+        wrap.append(msg, clearBtn);
+        return wrap;
     }
 
     let activeProject = null;
@@ -148,16 +246,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 1. Build Desktop Sidebar Registry Menu
     function initSidebarRegistry() {
-        if (!geometricMenu || !myProjects.length) return;
+        if (!geometricMenu) return;
+        buildRegistry();
+    }
+
+    // (Re)builds the registry from the currently filtered project list.
+    function buildRegistry() {
+        if (!geometricMenu) return;
+
+        const visibleProjects = getVisibleProjects();
+        if (!visibleProjects.length) {
+            geometricMenu.innerHTML = "";
+            geometricMenu.appendChild(buildFiltersEmptyState());
+            return;
+        }
 
         geometricMenu.innerHTML = "";
 
-        myProjects.forEach((project, index) => {
+        visibleProjects.forEach((project, index) => {
             const indexString = String(index + 1).padStart(2, "0");
 
             const menuItem = document.createElement("button");
             menuItem.type = "button";
-            menuItem.className = "menu-item";
+            menuItem.className =
+                "menu-item" + (project.featured ? " featured" : "");
 
             if (index === 0) {
                 menuItem.classList.add("active-menu-item");
@@ -171,6 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
             menuItem.innerHTML = `
                 <span class="menu-item-index">${indexString}</span>
                 <span class="menu-item-title">${project.title}</span>
+                ${project.featured ? '<span class="menu-item-featured" title="Featured project" aria-hidden="true"></span>' : ""}
             `;
 
             menuItem.addEventListener("click", () => {
@@ -190,8 +303,14 @@ document.addEventListener("DOMContentLoaded", () => {
             geometricMenu.appendChild(menuItem);
         });
 
-        if (myProjects.length) {
-            renderPresenterWithAnimation(myProjects[0], "01");
+        // Keep the presenter on the active project if it is still visible;
+        // otherwise fall back to the first visible project.
+        if (!visibleProjects.includes(activeProject)) {
+            // Preserve existing fallback: select the first visible project;
+            // never render when the filtered list is empty.
+            if (visibleProjects.length) {
+                renderPresenterWithAnimation(visibleProjects[0], "01");
+            }
         }
     }
 
@@ -250,61 +369,406 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 3. Mobile Grid Building
-    if (mobileGrid) {
-        if (!myProjects.length) {
-            mobileGrid.innerHTML =
-                '<p class="empty-state">No projects to display.</p>';
-        } else {
+    function initMobileGrid() {
+        if (!mobileGrid) return;
+        buildMobileGrid();
+    }
+
+    // (Re)builds the mobile grid from the currently filtered project list.
+    function buildMobileGrid() {
+        if (!mobileGrid) return;
+
+        const visibleProjects = getVisibleProjects();
+
+        if (!visibleProjects.length) {
+            mobileGrid.innerHTML = "";
+            mobileGrid.appendChild(buildFiltersEmptyState());
+            return;
+        }
+
+        mobileGrid.innerHTML = "";
+
+        visibleProjects.forEach(project => {
+            const card = document.createElement("button");
+
+            card.type = "button";
+            card.className =
+                "project-card" +
+                (project.featured ? " featured" : "");
+
+            const taglineHtml = project.tagline
+                ? `<span class="card-tagline">${project.tagline}</span>`
+                : "";
+
+            const featuredBadgeHtml = project.featured
+                ? '<span class="card-featured-badge">Featured</span>'
+                : "";
+
+            let techHtml = "";
+
+            if (project.techs?.length) {
+                const techSpans = project.techs
+                    .map(t => `<span class="card-tech-tag">${t}</span>`)
+                    .join("");
+
+                techHtml = `<div class="card-techs">${techSpans}</div>`;
+            }
+
+            card.innerHTML = `
+                <div class="project-card-head">
+                    <img
+                        src="${project.favicon || fallbackFavicon}"
+                        alt=""
+                        class="project-card-favicon"
+                        width="32"
+                        height="32"
+                        loading="lazy"
+                        onerror="this.onerror=null;this.src='${fallbackFavicon}'"
+                    >
+                    <span class="project-card-title">${project.title}</span>
+                    ${featuredBadgeHtml}
+                </div>
+                ${taglineHtml}
+                <p>${project.description.substring(0, 100)}...</p>
+                ${techHtml}
+            `;
+
+            card.setAttribute(
+                "aria-label",
+                `View project: ${project.title}` +
+                    (project.featured ? " (Featured)" : "")
+            );
+
+            card.addEventListener("click", () => {
+                openProjectInViewer(project, card);
+            });
+
+            mobileGrid.appendChild(card);
+        });
+    }
+
+    // 3b. Category Filter Bar — single-select, derived from project data.
+    function initProjectFilters() {
+        const filterBar = document.getElementById("projectFilters");
+        if (!filterBar || !myProjects.length) return;
+
+        const filterButtons = [];
+
+        const makeButton = (value, label) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "project-filter-btn";
+            btn.dataset.filter = value;
+            btn.textContent = label;
+            btn.setAttribute(
+                "aria-pressed",
+                value === activeFilter ? "true" : "false"
+            );
+
+            btn.addEventListener("click", () => {
+                if (btn.dataset.filter === activeFilter) return;
+                selectFilter(btn.dataset.filter);
+            });
+
+            filterButtons.push(btn);
+            filterBar.appendChild(btn);
+        };
+
+        makeButton("all", "All");
+
+        // Derive categories from the actual project data.
+        [...new Set(myProjects.map(p => p.category).filter(Boolean))]
+            .forEach(category => {
+                makeButton(
+                    category,
+                    categoryLabels[category] || category
+                );
+            });
+
+        function selectFilter(value) {
+            activeFilter = value;
+
+            filterButtons.forEach(btn => {
+                btn.setAttribute(
+                    "aria-pressed",
+                    String(btn.dataset.filter === value)
+                );
+            });
+
+            // Both listings rebuild from the same featured-first ordered list,
+            // so filtering never breaks the featured ordering.
+            buildRegistry();
+            buildMobileGrid();
+        }
+
+        // 3b-2. Tech Stack multi-select — options derived from the actual
+        // project.techs arrays (deduplicated case-insensitively, original
+        // display labels preserved). Matching is AND across selections.
+        function buildTechFilter() {
+            const techOptions = [];
+            const seenKeys = new Set();
+
             myProjects.forEach(project => {
-                const card = document.createElement("button");
+                if (!Array.isArray(project.techs)) return;
+                project.techs.forEach(tech => {
+                    if (typeof tech !== "string" || !tech.trim()) return;
+                    const key = tech.trim().toLowerCase();
+                    if (seenKeys.has(key)) return;
+                    seenKeys.add(key);
+                    techOptions.push({ key, label: tech.trim() });
+                });
+            });
 
-                card.type = "button";
-                card.className =
-                    "project-card" +
-                    (project.featured ? " featured" : "");
+            if (!techOptions.length) return;
 
-                const taglineHtml = project.tagline
-                    ? `<span class="card-tagline">${project.tagline}</span>`
-                    : "";
+            const wrapper = document.createElement("div");
+            wrapper.className = "tech-filter";
 
-                let techHtml = "";
+            const trigger = document.createElement("button");
+            trigger.type = "button";
+            trigger.className =
+                "project-filter-btn tech-filter-trigger";
+            trigger.id = "techFilterTrigger";
+            trigger.setAttribute("aria-expanded", "false");
+            trigger.setAttribute("aria-controls", "techFilterPanel");
 
-                if (project.techs?.length) {
-                    const techSpans = project.techs
-                        .map(t => `<span class="card-tech-tag">${t}</span>`)
-                        .join("");
+            // Label + chevron spans so the CSS-only chevron survives label updates.
+            const triggerLabel = document.createElement("span");
+            triggerLabel.className = "tech-filter-trigger-label";
+            const chevron = document.createElement("span");
+            chevron.className = "tech-filter-chevron";
+            chevron.setAttribute("aria-hidden", "true");
+            trigger.append(triggerLabel, chevron);
 
-                    techHtml = `<div class="card-techs">${techSpans}</div>`;
+            const panel = document.createElement("div");
+            panel.className = "tech-filter-panel";
+            panel.id = "techFilterPanel";
+            panel.hidden = true;
+            panel.setAttribute("role", "group");
+            panel.setAttribute("aria-label", "Filter projects by technologies");
+
+            techOptions.forEach(option => {
+                const optionLabel = document.createElement("label");
+                optionLabel.className = "tech-filter-option";
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.value = option.key;
+                checkbox.name = "tech-filter";
+
+                const text = document.createElement("span");
+                text.textContent = option.label;
+
+                optionLabel.append(checkbox, text);
+                panel.appendChild(optionLabel);
+            });
+
+            const clearBtn = document.createElement("button");
+            clearBtn.type = "button";
+            clearBtn.className = "tech-filter-clear";
+            clearBtn.textContent = "Clear";
+            clearBtn.hidden = true;
+
+            panel.appendChild(clearBtn);
+
+            function updateTrigger() {
+                const count = selectedTechs.length;
+                triggerLabel.textContent =
+                    count > 0 ? `Tech Stack (${count})` : "Tech Stack";
+                trigger.classList.toggle("has-selection", count > 0);
+                clearBtn.hidden = count === 0;
+            }
+
+            // Shared trigger label updater (also used by clearAllFilters).
+            updateTechFilterTrigger = updateTrigger;
+            updateTrigger();
+
+            function openPanel() {
+                panel.hidden = false;
+                trigger.setAttribute("aria-expanded", "true");
+            }
+
+            function closePanel() {
+                panel.hidden = true;
+                trigger.setAttribute("aria-expanded", "false");
+            }
+
+            trigger.addEventListener("click", () => {
+                if (panel.hidden) {
+                    openPanel();
+                } else {
+                    closePanel();
+                    trigger.focus();
+                }
+            });
+
+            panel.addEventListener("change", e => {
+                if (e.target?.type !== "checkbox") return;
+
+                if (e.target.checked) {
+                    if (!selectedTechs.includes(e.target.value)) {
+                        selectedTechs.push(e.target.value);
+                    }
+                } else {
+                    selectedTechs = selectedTechs.filter(
+                        key => key !== e.target.value
+                    );
                 }
 
-                card.innerHTML = `
-                    <div class="project-card-head">
-                        <img
-                            src="${project.favicon || fallbackFavicon}"
-                            alt=""
-                            class="project-card-favicon"
-                            width="32"
-                            height="32"
-                            loading="lazy"
-                            onerror="this.onerror=null;this.src='${fallbackFavicon}'"
-                        >
-                        <span class="project-card-title">${project.title}</span>
-                    </div>
-                    ${taglineHtml}
-                    <p>${project.description.substring(0, 100)}...</p>
-                    ${techHtml}
-                `;
+                updateTrigger();
 
-                card.setAttribute(
-                    "aria-label",
-                    `View project: ${project.title}`
-                );
+                // Multiple selections stay applied without closing the panel.
+                buildRegistry();
+                buildMobileGrid();
+            });
 
-                card.addEventListener("click", () => {
-                    openProjectInViewer(project, card);
+            clearBtn.addEventListener("click", () => {
+                selectedTechs = [];
+                panel
+                    .querySelectorAll("input[type='checkbox']")
+                    .forEach(box => {
+                        box.checked = false;
+                    });
+
+                updateTrigger();
+                buildRegistry();
+                buildMobileGrid();
+            });
+
+            // Escape closes the panel. Bound to the wrapper so it never
+            // interferes with the project modal's document-level Escape.
+            wrapper.addEventListener("keydown", e => {
+                if (e.key === "Escape" && !panel.hidden) {
+                    closePanel();
+                    trigger.focus();
+                }
+            });
+
+            // Click outside closes the panel.
+            document.addEventListener("pointerdown", e => {
+                if (panel.hidden) return;
+                if (!wrapper.contains(e.target)) {
+                    closePanel();
+                }
+            });
+
+            wrapper.append(trigger, panel);
+            filterBar.appendChild(wrapper);
+        }
+
+        buildTechFilter();
+    }
+
+    // Populate the mobile Overview panel from existing project data
+    // (title, tagline, description, highlights, tech stack).
+    function renderViewerOverview(project) {
+        if (!viewerOverviewTitle) return;
+
+        viewerOverviewTitle.innerText = project.title;
+
+        if (viewerOverviewTagline) {
+            viewerOverviewTagline.innerText = project.tagline || "";
+            viewerOverviewTagline.style.display = project.tagline ? "" : "none";
+        }
+
+        viewerOverviewDesc.innerText = project.description;
+
+        if (viewerHighlights && viewerHighlightsBlock) {
+            viewerHighlights.innerHTML = "";
+
+            if (Array.isArray(project.highlights) && project.highlights.length) {
+                project.highlights.forEach(highlight => {
+                    if (typeof highlight !== "string" || !highlight.trim()) return;
+                    const item = document.createElement("li");
+                    item.textContent = highlight.trim();
+                    viewerHighlights.appendChild(item);
                 });
+                viewerHighlightsBlock.hidden = !viewerHighlights.children.length;
+            } else {
+                viewerHighlightsBlock.hidden = true;
+            }
+        }
 
-                mobileGrid.appendChild(card);
+        if (viewerTechs && viewerTechsBlock) {
+            viewerTechs.innerHTML = "";
+
+            if (Array.isArray(project.techs) && project.techs.length) {
+                project.techs.forEach(tech => {
+                    const tag = document.createElement("span");
+                    tag.className = "tech-tag";
+                    tag.textContent = tech;
+                    viewerTechs.appendChild(tag);
+                });
+            }
+            viewerTechsBlock.hidden = !viewerTechs.children.length;
+        }
+    }
+
+    // Mobile viewer tabs — accessible tab semantics with roving tabindex and
+    // arrow-key navigation. Panels are toggled via the `hidden` attribute so
+    // the iframe is never destroyed or reloaded when switching tabs.
+    const viewerMobileQuery = window.matchMedia("(max-width: 768px)");
+
+    function selectViewerTab(tabId) {
+        viewerTabs.forEach(tab => {
+            const selected = tab.id === tabId;
+            tab.setAttribute("aria-selected", String(selected));
+            tab.tabIndex = selected ? 0 : -1;
+
+            const panel = document.getElementById(tab.getAttribute("aria-controls"));
+            if (panel) {
+                // Only the mobile tabbed experience hides panels; on desktop the
+                // full stacked layout must stay visible at all times.
+                panel.hidden = viewerMobileQuery.matches ? !selected : false;
+            }
+        });
+    }
+
+    function initViewerTabs() {
+        viewerTabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                selectViewerTab(tab.id);
+            });
+
+            tab.addEventListener("keydown", e => {
+                const enabledTabs = viewerTabs.filter(t => !t.hidden);
+                if (enabledTabs.length < 2) return;
+
+                const currentIndex = enabledTabs.indexOf(tab);
+                let targetIndex = null;
+
+                if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+                    targetIndex = (currentIndex + 1) % enabledTabs.length;
+                } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+                    targetIndex = (currentIndex - 1 + enabledTabs.length) % enabledTabs.length;
+                } else if (e.key === "Home") {
+                    targetIndex = 0;
+                } else if (e.key === "End") {
+                    targetIndex = enabledTabs.length - 1;
+                }
+
+                if (targetIndex === null) return;
+                e.preventDefault();
+                selectViewerTab(enabledTabs[targetIndex].id);
+                enabledTabs[targetIndex].focus();
+            });
+        });
+
+        // Initial state: Overview selected, other panels hidden.
+        selectViewerTab("tabOverview");
+
+        // If the viewport crosses to desktop while a non-overview panel is
+        // hidden, unhide all panels so the full desktop layout shows.
+        if (typeof viewerMobileQuery.addEventListener === "function") {
+            viewerMobileQuery.addEventListener("change", e => {
+                if (!e.matches) {
+                    viewerTabs.forEach(tab => {
+                        const panel = document.getElementById(
+                            tab.getAttribute("aria-controls")
+                        );
+                        if (panel) panel.hidden = false;
+                    });
+                }
             });
         }
     }
@@ -348,6 +812,16 @@ document.addEventListener("DOMContentLoaded", () => {
         viewedProjectDesc.innerText = project.description;
 
         renderCaseStudy(project.caseStudy);
+        renderViewerOverview(project);
+
+        // Show the Case Study tab only when there is case study content.
+        const caseTab = viewerTabs.find(t => t.id === "tabCaseStudy");
+        if (caseTab) {
+            caseTab.hidden = !viewerCaseStudy || viewerCaseStudy.hidden;
+        }
+
+        // Always open on the Overview tab (mobile); no-op visually on desktop.
+        selectViewerTab("tabOverview");
 
         if (project.liveUrl) {
             liveLink.href = project.liveUrl;
@@ -407,6 +881,9 @@ document.addEventListener("DOMContentLoaded", () => {
             viewerCaseStudy.innerHTML = "";
             viewerCaseStudy.hidden = true;
         }
+
+        // Reset to the Overview tab so reopening starts there (mobile).
+        selectViewerTab("tabOverview");
 
         if (
             lastFocusedElement &&
@@ -525,7 +1002,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Boot App Setup
+    initProjectFilters();
     initSidebarRegistry();
+    initMobileGrid();
+    initViewerTabs();
     initScrollReveal();
     initNavActiveState();
 });

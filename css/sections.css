@@ -244,6 +244,166 @@
 }
 
 
+/* --- Project Category Filters --- */
+.project-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin: var(--space-md) 0 var(--space-xl);
+}
+.project-filter-btn {
+    padding: var(--space-xs) var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out),
+                background var(--duration-fast) var(--ease-out);
+}
+.project-filter-btn:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+}
+.project-filter-btn:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+}
+.project-filter-btn[aria-pressed="true"] {
+    background: rgba(179, 135, 40, 0.12);
+    border-color: var(--gold-solid);
+    color: var(--gold-light);
+}
+
+/* --- Tech Stack Multi-Select Filter --- */
+.tech-filter {
+    position: relative;
+    display: inline-block;
+}
+/* Distinct "dropdown control" identity: solid elevated surface, chevron. */
+.tech-filter-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    background: var(--color-surface-elevated);
+}
+.tech-filter-trigger .tech-filter-chevron {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translate(-1px, -1px);
+    transition: transform var(--duration-fast) var(--ease-out);
+}
+.tech-filter-trigger[aria-expanded="true"] {
+    border-color: var(--gold-solid);
+    color: var(--gold-light);
+    background: rgba(179, 135, 40, 0.12);
+}
+.tech-filter-trigger[aria-expanded="true"] .tech-filter-chevron {
+    transform: rotate(-135deg) translate(-1px, -1px);
+}
+.tech-filter-trigger.has-selection {
+    background: rgba(179, 135, 40, 0.12);
+    border-color: var(--gold-solid);
+    color: var(--gold-light);
+}
+.tech-filter-panel {
+    position: absolute;
+    top: calc(100% + var(--space-xs));
+    left: 0;
+    z-index: 30;
+    min-width: 220px;
+    max-width: min(300px, calc(100vw - 3rem));
+    max-height: min(340px, 50vh);
+    overflow-y: auto;
+    padding: var(--space-sm);
+    /* Opaque floating menu — strongest surface token, readable over anything */
+    background: var(--color-surface-elevated);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.tech-filter-option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    cursor: pointer;
+    min-height: 36px;
+    transition: color var(--duration-fast) var(--ease-out),
+                background var(--duration-fast) var(--ease-out);
+}
+.tech-filter-option:hover {
+    background: rgba(179, 135, 40, 0.08);
+    color: var(--color-text);
+}
+.tech-filter-option:has(input:checked) {
+    color: var(--gold-light);
+    font-weight: 500;
+    background: rgba(179, 135, 40, 0.08);
+}
+.tech-filter-option input[type="checkbox"] {
+    accent-color: var(--gold-solid);
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.tech-filter-option input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+}
+.tech-filter-clear {
+    margin-top: var(--space-xs);
+    padding: calc(var(--space-xs) * 0.75) var(--space-sm);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    font-family: inherit;
+    cursor: pointer;
+    align-self: flex-start;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+.tech-filter-clear:hover {
+    color: var(--color-text);
+}
+.tech-filter-clear:focus-visible {
+    outline: 2px solid var(--gold-light);
+    outline-offset: 2px;
+}
+
+/* --- Filters Empty State (desktop registry + mobile grid) --- */
+.filters-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg, 12px);
+    color: var(--color-text-secondary);
+    width: 100%;
+}
+.filters-empty-state .empty-state {
+    margin: 0;
+}
+
 /* --- Mobile Projects List --- */
 .mobile-projects-list {
     display: none;
@@ -351,6 +511,31 @@
 }
 .project-card.featured:hover {
     border-color: var(--gold-solid);
+}
+
+/* Featured badge — subtle, consistent indication on project cards */
+.card-featured-badge {
+    margin-left: auto;
+    padding: 1px var(--space-sm);
+    background: rgba(179, 135, 40, 0.1);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--gold-light);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Featured marker in the desktop registry menu */
+.menu-item-featured {
+    width: 6px;
+    height: 6px;
+    margin-left: auto;
+    border-radius: 50%;
+    background: var(--gold-solid);
+    flex-shrink: 0;
 }
 
 /* --- About Section --- */
@@ -783,6 +968,156 @@
     transform: scale(1);
 }
 
+/* --- Viewer Panels & Mobile Tabs --- */
+/* Desktop: no tab bar; the full stacked layout is shown at once (Overview
+   panel hidden — its content is desktop's .project-details region). */
+.viewer-mobile-tabs { display: none; }
+
+.viewer-panels {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+.viewer-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+.viewer-panel[hidden] { display: none; }
+.viewer-panel-overview { display: none; }
+.viewer-panel-preview {
+    flex: 1;
+    min-height: 0;
+}
+/* Desktop case study: same restrained height it had inside .project-details */
+.viewer-panel-case-study {
+    flex-basis: auto;
+    max-height: 34vh;
+    overflow-y: auto;
+    border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 768px) {
+    /* Segmented tab navigation: Overview | Live Preview | Case Study */
+    .viewer-mobile-tabs {
+        display: flex;
+        gap: var(--space-xs);
+        padding: var(--space-sm);
+        background: var(--color-surface-elevated);
+        border-bottom: 1px solid var(--color-border);
+        flex-shrink: 0;
+    }
+    .viewer-tab {
+        flex: 1;
+        padding: var(--space-sm);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: var(--radius-md);
+        color: var(--color-text-secondary);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        cursor: pointer;
+        transition: color var(--duration-fast) var(--ease-out),
+                    border-color var(--duration-fast) var(--ease-out),
+                    background var(--duration-fast) var(--ease-out);
+    }
+    .viewer-tab[aria-selected="true"] {
+        background: rgba(179, 135, 40, 0.12);
+        border-color: var(--color-border-strong);
+        color: var(--gold-light);
+    }
+    .viewer-tab:focus-visible {
+        outline: 2px solid var(--gold-light);
+        outline-offset: 2px;
+    }
+    .viewer-tab[hidden] { display: none; }
+
+    /* Only the active panel is visible; it scrolls internally so the CTA
+       footer (.project-details) stays persistently visible. */
+    .viewer-panel { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .viewer-panel-preview { overflow: hidden; }
+    .viewer-panel-overview { display: flex; }
+    .viewer-panel-case-study {
+        max-height: none;
+        border-top: none;
+    }
+
+    /* Mobile Overview panel content */
+    .viewer-overview {
+        padding: var(--space-lg);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+    .viewer-overview-title {
+        font-size: var(--text-xl);
+        font-weight: 700;
+        color: var(--color-text);
+    }
+    .viewer-overview-tagline {
+        color: var(--gold-solid);
+        font-size: var(--text-sm);
+        font-weight: 500;
+    }
+    .viewer-overview-desc {
+        color: var(--color-text-secondary);
+        font-size: var(--text-sm);
+        line-height: 1.65;
+    }
+    .viewer-overview-heading {
+        font-size: var(--text-sm);
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--gold-muted);
+        margin-bottom: var(--space-xs);
+    }
+    .viewer-highlights {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+    .viewer-highlights li {
+        position: relative;
+        padding-left: var(--space-lg);
+        color: var(--color-text-secondary);
+        font-size: var(--text-sm);
+        line-height: 1.6;
+    }
+    .viewer-highlights li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.6em;
+        width: 6px;
+        height: 6px;
+        background: var(--gold-solid);
+        border-radius: 50%;
+    }
+    .viewer-overview-techs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+    }
+    .viewer-overview-techs .tech-tag {
+        padding: 2px var(--space-sm);
+        background: rgba(179, 135, 40, 0.06);
+        border: 1px solid rgba(179, 135, 40, 0.15);
+        border-radius: var(--radius-sm);
+        font-size: var(--text-xs);
+        color: var(--color-text);
+        font-weight: 500;
+    }
+
+    /* Persistent footer CTA area: title + links stay visible; the long
+       description lives in the Overview tab instead. */
+    .project-details p { display: none; }
+    .project-details h3 { font-size: var(--text-md); }
+}
+
+
 /* --- Preview Frame (viewer chrome around the live iframe) --- */
 .preview-frame {
     display: flex;
@@ -862,10 +1197,34 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--gold-solid);
-    font-weight: 600;
-    font-size: var(--text-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
 }
+
+/* CSS-only loading spinner (iframe loader only). */
+.spinner {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid rgba(179, 135, 40, 0.2);
+    border-top-color: var(--gold-solid);
+    animation: spinner-rotate 0.8s linear infinite;
+}
+
+@keyframes spinner-rotate {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .spinner {
+        animation: none;
+        border-color: rgba(179, 135, 40, 0.35);
+        border-top-color: var(--gold-solid);
+    }
+}
+
 
 .iframe-fallback {
     position: absolute;
@@ -914,12 +1273,7 @@
 
 /* --- Viewer Case Study --- */
 .viewer-case-study {
-    flex-basis: 100%;
-    width: 100%;
-    max-height: 34vh;
-    overflow-y: auto;
-    padding: var(--space-md) 0 0;
-    border-top: 1px solid var(--color-border);
+    padding: var(--space-lg);
 }
 .case-study-title {
     font-size: var(--text-md);

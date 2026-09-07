@@ -109,6 +109,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    white-space: nowrap;
+    max-width: 100%;
     gap: var(--space-sm);
     color: var(--gold-solid);
     font-size: var(--text-xs);

@@ -162,6 +162,8 @@
                 <p class="section-subtitle">A selection of products built to solve real problems through thoughtful engineering and refined user experiences.</p>
             </div>
 
+            <div class="project-filters" id="projectFilters" role="group" aria-label="Filter projects by category"></div>
+
             <div class="showcase-area">
                 <aside class="sidebar-controls">
                     <nav class="geometric-menu" id="geometricMenu" aria-label="Project list"></nav>
@@ -429,30 +431,73 @@
     <dialog class="project-viewer" id="projectViewer" aria-labelledby="viewedProjectTitle">
         <div class="viewer-content">
             <button class="close-btn" id="closeViewer" type="button" aria-label="Close viewer">&times;</button>
-            <div class="preview-frame">
-                <div class="preview-frame-header" aria-hidden="true">
-                    <div class="preview-frame-dots">
-                        <span class="preview-dot"></span>
-                        <span class="preview-dot"></span>
-                        <span class="preview-dot"></span>
+
+            <!-- Mobile-only segmented tab navigation (Overview | Live Preview | Case Study).
+                 Hidden on desktop, where the full stacked layout is shown at once. -->
+            <div class="viewer-mobile-tabs" role="tablist" aria-label="Project viewer sections">
+                <button class="viewer-tab" id="tabOverview" type="button" role="tab"
+                        aria-selected="true" aria-controls="panelOverview">Overview</button>
+                <button class="viewer-tab" id="tabPreview" type="button" role="tab"
+                        aria-selected="false" aria-controls="panelPreview" tabindex="-1">Live Preview</button>
+                <button class="viewer-tab" id="tabCaseStudy" type="button" role="tab"
+                        aria-selected="false" aria-controls="panelCaseStudy" tabindex="-1">Case Study</button>
+            </div>
+
+            <div class="viewer-panels">
+                <!-- Overview panel — mobile-only content (title, tagline, description,
+                     highlights, tech stack). Populated by app.js; hidden on desktop. -->
+                <section class="viewer-panel viewer-panel-overview" id="panelOverview" role="tabpanel" aria-labelledby="tabOverview" tabindex="0">
+                    <div class="viewer-overview">
+                        <h3 class="viewer-overview-title" id="viewerOverviewTitle"></h3>
+                        <p class="viewer-overview-tagline" id="viewerOverviewTagline"></p>
+                        <p class="viewer-overview-desc" id="viewerOverviewDesc"></p>
+                        <div class="viewer-overview-block" id="viewerHighlightsBlock">
+                            <h4 class="viewer-overview-heading">Highlights</h4>
+                            <ul class="viewer-highlights" id="viewerHighlights"></ul>
+                        </div>
+                        <div class="viewer-overview-block" id="viewerTechsBlock">
+                            <h4 class="viewer-overview-heading">Tech Stack</h4>
+                            <div class="viewer-overview-techs" id="viewerTechs"></div>
+                        </div>
                     </div>
-                    <span class="preview-frame-label">Live Preview</span>
-                    <span class="preview-frame-status"><span class="preview-status-dot"></span>Live</span>
-                </div>
-                <div class="iframe-wrapper">
-                    <iframe id="projectIframe" title="Project Live Preview" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
-                    <div class="iframe-loader" id="iframeLoader" hidden>Loading preview...</div>
-                    <div class="iframe-fallback" id="iframeFallback" hidden>
-                        <p>Live preview unavailable in embedded mode.</p>
-                        <a href="#" id="iframeFallbackLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Live Site</a>
+                </section>
+
+                <!-- Live Preview panel — same iframe + loader/timeout/fallback lifecycle. -->
+                <section class="viewer-panel viewer-panel-preview" id="panelPreview" role="tabpanel" aria-labelledby="tabPreview" tabindex="0">
+                    <div class="preview-frame">
+                        <div class="preview-frame-header" aria-hidden="true">
+                            <div class="preview-frame-dots">
+                                <span class="preview-dot"></span>
+                                <span class="preview-dot"></span>
+                                <span class="preview-dot"></span>
+                            </div>
+                            <span class="preview-frame-label">Live Preview</span>
+                            <span class="preview-frame-status"><span class="preview-status-dot"></span>Live</span>
+                        </div>
+                        <div class="iframe-wrapper">
+                            <iframe id="projectIframe" title="Project Live Preview" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                            <div class="iframe-loader" id="iframeLoader" hidden>
+                                <span class="spinner" aria-hidden="true"></span>
+                                <span class="visually-hidden">Loading preview…</span>
+                            </div>
+                            <div class="iframe-fallback" id="iframeFallback" hidden>
+                                <p>Live preview unavailable in embedded mode.</p>
+                                <a href="#" id="iframeFallbackLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Live Site</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </section>
+
+                <!-- Case Study panel — full vertical space on mobile instead of a
+                     nested scroll region inside .project-details. -->
+                <section class="viewer-panel viewer-panel-case-study" id="panelCaseStudy" role="tabpanel" aria-labelledby="tabCaseStudy" tabindex="0">
+                    <div class="viewer-case-study" id="viewerCaseStudy" hidden></div>
+                </section>
             </div>
 
             <div class="project-details">
                 <h3 id="viewedProjectTitle">Project Title</h3>
                 <p id="viewedProjectDesc">Project description.</p>
-                <div class="viewer-case-study" id="viewerCaseStudy" hidden></div>
                 <div class="project-links">
                     <a href="#" id="liveLink" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Launch Live Site</a>
                     <a href="#" id="repoLink" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View GitHub</a>
