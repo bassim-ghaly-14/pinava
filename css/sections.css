@@ -924,16 +924,20 @@
 }
 
 .close-btn {
-    position: absolute;
-    top: var(--space-xs);
-    right: var(--space-xs);
+    /* In-flow footer item (last child of .project-details, after .project-links):
+       flex layout — not absolute positioning — guarantees the 44px box can never
+       overlap either CTA at any width. Parent wraps, so the button drops to its
+       own row rather than covering a CTA when space is tight. */
+    position: static;
+    flex-shrink: 0;
+    margin-left: auto;
+    align-self: center;
     width: 44px;
     height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     line-height: 1;
-    z-index: 3;
     background: rgba(20, 20, 20, 0.8);
     border: 1px solid var(--color-border);
     color: var(--color-text);
@@ -1133,9 +1137,6 @@
     align-items: center;
     gap: var(--space-sm);
     padding: var(--space-sm) var(--space-md);
-    /* Leave the top-right corner clear for the absolutely-positioned close
-       button (44px) that now lives on the modal card. */
-    padding-right: calc(var(--space-md) + 44px);
     background: var(--color-surface-elevated);
     border-bottom: 1px solid var(--color-border);
     position: relative;
@@ -1249,6 +1250,7 @@
 
 .project-details {
     padding: var(--space-lg);
+    padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
     background: var(--color-surface-elevated);
     border-top: 1px solid var(--color-border);
     display: flex;
@@ -1271,6 +1273,7 @@
 }
 .project-links {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--space-sm);
 }
 
