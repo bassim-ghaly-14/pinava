@@ -924,12 +924,12 @@
 }
 
 .close-btn {
-    /* In-flow footer item (last child of .project-details, after .project-links):
-       flex layout — not absolute positioning — guarantees the 44px box can never
-       overlap either CTA at any width. Parent wraps, so the button drops to its
-       own row rather than covering a CTA when space is tight. */
+    /* In-flow action item (last child of .project-links, after both CTAs):
+       shared non-wrapping flex row — not absolute positioning — guarantees the
+       44px box can never overlap either CTA at any width. margin-left:auto
+       pins it to the far right while keeping all three controls on one row. */
     position: static;
-    flex-shrink: 0;
+    flex: 0 0 auto;
     margin-left: auto;
     align-self: center;
     width: 44px;
@@ -1273,8 +1273,13 @@
 }
 .project-links {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: center;
     gap: var(--space-sm);
+}
+.project-links .btn {
+    flex: 0 1 auto;
+    white-space: nowrap;
 }
 
 /* --- Viewer Case Study --- */

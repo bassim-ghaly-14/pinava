@@ -24,13 +24,14 @@
     .header-inner { padding: var(--space-md); }
     .hero { padding: clamp(2.5rem, 6vw, 4rem) var(--space-lg) clamp(3rem, 7vw, 5rem); }
     .viewer-content { height: 95vh; width: 95%; }
-    .project-details { flex-direction: column; align-items: flex-start; }
+    .project-details { flex-direction: column; align-items: stretch; }
     .project-details p { margin: var(--space-sm) 0; }
-    .project-links { width: 100%; justify-content: space-between; }
+    .project-links { width: 100%; justify-content: flex-start; flex-wrap: nowrap; align-items: center; }
     /* Footer close button stays bottom-right on the stacked mobile footer:
-       column axis makes align-self:center horizontal-center, so reassert
-       flex-end (right) while keeping it on its own wrapped row. */
-    .project-details .close-btn { align-self: flex-end; margin-left: auto; }
+       it is the last item of the single-row .project-links action row, so
+       margin-left:auto pins it right while align-self:center keeps it
+       vertically aligned with both CTAs on the same row. */
+    .project-details .close-btn { align-self: center; margin-left: auto; }
     .contact-cta {
         padding: var(--space-xl) var(--space-lg);
         flex-direction: column;
@@ -82,10 +83,23 @@
     .stack-groups { grid-template-columns: 1fr; }
     .mobile-grid { grid-template-columns: 1fr; }
     .contact-grid { grid-template-columns: 1fr; }
+    /* Modal action row: keep [ Launch Live Site ] [ View GitHub ] [ × ] on one
+       non-wrapping row. 320px budget: ~304px viewport − ~32px footer padding −
+       gaps/close ≈ 100px leaves ~200px for both CTAs, so shrink gaps first,
+       then CTA padding/font, then footer padding — never hide or truncate. */
+    .project-details { padding: var(--space-md); padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom, 0px)); }
+    .project-links { gap: var(--space-xs); }
+    .project-links .btn { padding: var(--space-xs) var(--space-sm); font-size: var(--text-xs); min-height: 40px; }
+    .project-links .close-btn { width: 40px; height: 40px; font-size: 1.5rem; }
 }
 
 @media (max-width: 320px) {
     .hero-title { font-size: 1.5rem; }
     .section-title { font-size: 1.25rem; }
     .header-brand-text { display: none; }
+    /* 320px action row: squeeze remaining slack (footer padding, gaps, CTA
+       padding) so both full labels + 40px close fit without wrap or overlap. */
+    .project-details { padding: var(--space-sm); padding-bottom: calc(var(--space-sm) + env(safe-area-inset-bottom, 0px)); gap: var(--space-sm); }
+    .project-links { gap: 6px; }
+    .project-links .btn { padding: 6px 8px; min-height: 40px; }
 }
